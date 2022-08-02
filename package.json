@@ -1,0 +1,27 @@
+{
+  "name": "bodyworks",
+  "version": "1.0.0",
+  "description": "an attempt to model biology of the human body",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watch --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/timothy-o-johnson/bodyworks.git"
+  },
+  "keywords": [
+    "body",
+    "model",
+    "biology"
+  ],
+  "author": "tim o johnson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/timothy-o-johnson/bodyworks/issues"
+  },
+  "homepage": "https://github.com/timothy-o-johnson/bodyworks#readme",
+  "devDependencies": {
+    "jest": "^28.1.3"
+  }
+}
