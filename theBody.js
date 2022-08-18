@@ -1,5 +1,6 @@
 const body = {
-    skeletalSystem: ['bones', 'ligaments']
+    articularSystem: ['fixed joints', 'moveable joints'],
+    skeletalSystem: ['bones', 'ligaments'],
 }
 
 module.exports ={
