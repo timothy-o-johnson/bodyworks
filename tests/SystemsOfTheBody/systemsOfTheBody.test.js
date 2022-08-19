@@ -27,6 +27,15 @@ describe('1. Systems of The Body', () => {
       expect(theBody.muscularSystem).toContain(muscle)
     })
   })
+
+  it('d. the cardiovascular system includes: four-chambered heart, arteries, capillaries, veins', ()=>{
+    const cardiovascularSystem = ['four-chambered heart', 'arteries', 'capillaries', 'veins']
+
+    cardiovascularSystem.forEach(part => {
+
+      expect(theBody.cardiovascularSystem).toContain(part)
+    })
+  })
 })
 
 // testing
