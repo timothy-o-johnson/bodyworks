@@ -3,5 +3,10 @@
 		{
 			"path": "../.."
 		}
-	]
+	],
+	"extensions": {
+		"recommendations": [
+			"numso.prettier-standard-vscode"
+		]
+	}
 }
