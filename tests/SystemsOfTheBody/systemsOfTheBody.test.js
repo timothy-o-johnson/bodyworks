@@ -12,10 +12,20 @@ describe('1. Systems of The Body', () => {
     expect(theBody.skeletalSystem).toContain('bones')
     expect(theBody.skeletalSystem).toContain('ligaments')
   })
-  
-  it(`b. the articular system should consist of both fixed and moveable joints`, ()=>{
+
+  it(`b. the articular system should consist of both fixed and moveable joints`, () => {
     expect(theBody.articularSystem).toContain('fixed joints')
     expect(theBody.articularSystem).toContain('moveable joints')
+  })
+
+  it('c. the muscular system includes: skeletal muscles, cardiac muscle, smooth muscle', () => {
+
+    const muscularSystemMuscles = ['skeletal muscles', 'cardiac muscle', 'smooth muscle']
+
+    muscularSystemMuscles.forEach(muscle => {
+
+      expect(theBody.muscularSystem).toContain(muscle)
+    })
   })
 })
 
