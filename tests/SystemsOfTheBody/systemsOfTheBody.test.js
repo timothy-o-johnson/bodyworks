@@ -36,6 +36,17 @@ describe('1. Systems of The Body', () => {
       expect(theBody.cardiovascularSystem).toContain(part)
     })
   })
+
+  it('e. the lymphatic system includes vessels and nodes', ()=>{
+    const lymphaticSystem = ['vessels', 'nodes']
+
+    lymphaticSystem.forEach(part => {
+
+      expect(theBody.lymphaticSystem).toContain(part)
+    })
+  })
+
+
 })
 
 // testing
