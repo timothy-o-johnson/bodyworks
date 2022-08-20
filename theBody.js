@@ -28,12 +28,12 @@ const body = {
         peripheral: [
           'nerves',
           {
-            visceral:
-              'involuntary flight-or-fight and vegetative functions'
+            visceral: 'involuntary flight-or-fight and vegetative functions'
           }
         ]
       }
     ],
+    respiratory: ['upper respiratory tract, lower respiratory tract'],
     skeletal: ['bones', 'ligaments']
   }
 }

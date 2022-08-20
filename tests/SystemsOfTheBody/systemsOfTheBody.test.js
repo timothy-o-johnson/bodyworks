@@ -99,6 +99,14 @@ describe('1. Systems of The Body', () => {
       )
     })
   })
+
+  it('i. the respitory system consists of the upper and lower respiratory tracts', ()=>{
+    const respiratorySystem = ['upper respiratory tract, lower respiratory tract']
+
+       respiratorySystem.forEach(part => {
+      expect(theBody.systems.respiratory).toContain(part)
+    })
+  })
 })
 
 describe('2. Processes', () => {
