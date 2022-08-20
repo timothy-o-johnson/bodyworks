@@ -6,6 +6,7 @@ const body = {
     'capillaries',
     'veins'
   ],
+  endocrineSystem : ['glands'],
   lymphaticSystem: ['vessels', 'nodes'],
   muscularSystem: ['skeletal muscles', 'cardiac muscle', 'smooth muscle'],
   nervousSystem: [

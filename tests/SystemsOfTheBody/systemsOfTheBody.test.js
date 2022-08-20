@@ -43,7 +43,7 @@ describe('1. Systems of The Body', () => {
   })
 
   it('e. the lymphatic system includes vessels and nodes', () => {
-    // recovers bodies tissue flueds and returns them to the heart
+    // recovers bodies tissue fluids and returns them to the heart
     const lymphaticSystem = ['vessels', 'nodes']
 
     lymphaticSystem.forEach(part => {
@@ -66,9 +66,37 @@ describe('1. Systems of The Body', () => {
       }
     ]
 
-    nervousSystem.forEach(part => {
-      expect(theBody.nervousSystem).toContain(part)
+    nervousSystem.forEach((part, index) => {
+      expect(theBody.nervousSystem[index]).toEqual(expect.objectContaining(part))
     })
+  })
+
+  it('g. the endocrine system consists of glands that secrete hormones', ()=>{
+     const endocrineSystem = ['glands']
+
+    endocrineSystem.forEach(part => {
+      expect(theBody.endocrineSystem).toContain(part)
+    })
+  })
+})
+
+
+describe('2. Processes', () =>{
+  describe('a. cell division/mitosis', ()=>{
+
+    cell = {}
+    
+    function doCellDivision(cell){
+      let daughterCells = []
+
+      cell = interphase(cell)
+      cell = prophase(cell)
+      cell = metaphase(cell)
+      cell = anaphase(cell)
+      daughterCells = telophase(cell)
+
+      return daughterCells
+    }
   })
 })
 
