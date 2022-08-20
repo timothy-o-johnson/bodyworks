@@ -160,6 +160,14 @@ describe('1. Systems of The Body', () => {
       expect(theBody.systems.immuneLymphoid).toContain(part)
     })
   })
+
+  it('m. the female reproductive system consists of uterine tube, uterus, ovaries, vagina', ()=>{
+    const femaleReproductiveSystem = ['uterine tube', 'uterus', 'ovaries', 'vagina']
+    
+    femaleReproductiveSystem.forEach(part => {
+      expect(theBody.systems.femaleReproductive).toContain(part)
+    })
+  })
 })
 
 describe('2. Processes', () => {

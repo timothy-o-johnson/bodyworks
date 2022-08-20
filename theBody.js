@@ -18,6 +18,7 @@ const body = {
       }
     ],
     endocrine: ['glands'],
+    femaleReproductive: ['ovaries', 'uterine tube', 'uterus', 'vagina'],
     immuneLymphoid: [
       'blood vessels',
       'bone marrow',
