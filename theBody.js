@@ -18,6 +18,18 @@ const body = {
       }
     ],
     endocrine: ['glands'],
+    immuneLymphoid: [
+      'blood vessels',
+      'bone marrow',
+      'intestines',
+      'kidneys',
+      'lungs',
+      'lymph nodes',
+      'microglia',
+      'spleen',
+      'thymus',
+      'tonsils'
+    ],
     integumentary: [
       {
         skin: [

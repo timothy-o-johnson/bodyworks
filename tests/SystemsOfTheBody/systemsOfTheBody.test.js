@@ -139,6 +139,27 @@ describe('1. Systems of The Body', () => {
       expect(theBody.systems.urinary).toContain(part)
     })
   })
+
+  it('l. the immune/lymphoid system consists of the microglia, the tonsils, the thymus, the lungs, lymph nodes, the spleen, the kidneys, blood vessels, intestines, and bone marrow', () => {
+    // organs involved in the body's defense; uses immune-related cells
+
+    const immuneLymphoidSystem = [
+      'blood vessels',
+      'bone marrow',
+      'intestines',
+      'kidneys',
+      'lungs',
+      'lymph nodes',
+      'microglia',
+      'spleen',
+      'thymus',
+      'tonsils'
+    ]
+
+    immuneLymphoidSystem.forEach(part => {
+      expect(theBody.systems.immuneLymphoid).toContain(part)
+    })
+  })
 })
 
 describe('2. Processes', () => {
