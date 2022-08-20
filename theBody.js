@@ -44,7 +44,8 @@ const body = {
       }
     ],
     respiratory: ['upper respiratory tract, lower respiratory tract'],
-    skeletal: ['bones', 'ligaments']
+    skeletal: ['bones', 'ligaments'],
+    urinary: ['kidneys', 'ureter', 'urinary bladder', 'urethra']
   }
 }
 

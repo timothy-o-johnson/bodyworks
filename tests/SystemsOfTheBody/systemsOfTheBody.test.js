@@ -131,6 +131,14 @@ describe('1. Systems of The Body', () => {
       }
     })
   })
+
+  it('k. the urinary system consists of the kidneys, the ureter, the urinary bladder, and urethra', () => {
+    const urinarySystem = ['kidneys', 'ureter', 'urinary bladder', 'urethra']
+
+    urinarySystem.forEach(part => {
+      expect(theBody.systems.urinary).toContain(part)
+    })
+  })
 })
 
 describe('2. Processes', () => {
