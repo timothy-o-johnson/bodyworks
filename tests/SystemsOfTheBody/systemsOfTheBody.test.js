@@ -67,26 +67,45 @@ describe('1. Systems of The Body', () => {
     ]
 
     nervousSystem.forEach((part, index) => {
-      expect(theBody.nervousSystem[index]).toEqual(expect.objectContaining(part))
+      expect(theBody.nervousSystem[index]).toEqual(
+        expect.objectContaining(part)
+      )
     })
   })
 
-  it('g. the endocrine system consists of glands that secrete hormones', ()=>{
-     const endocrineSystem = ['glands']
+  it('g. the endocrine system consists of glands that secrete hormones', () => {
+    const endocrineSystem = ['glands']
 
     endocrineSystem.forEach(part => {
       expect(theBody.endocrineSystem).toContain(part)
     })
   })
+
+  it('h. the integumentary system consists of skin which contains glands, sensory receptors, vessesls, immune cells, antibodies, and layers of cells and keratin', () => {
+    const skin = [
+      'glands',
+      'sensory receptors',
+      'vessels',
+      'immune cells',
+      'antibodies',
+      'layers of cells and keratin'
+    ]
+
+    const integumentarySystem = [{ skin }]
+
+    integumentarySystem.forEach((part, index) => {
+      expect(theBody.integumentarySystem[index]).toEqual(
+        expect.objectContaining(part)
+      )
+    })
+  })
 })
 
-
-describe('2. Processes', () =>{
-  describe('a. cell division/mitosis', ()=>{
-
+describe('2. Processes', () => {
+  describe('a. cell division/mitosis', () => {
     cell = {}
-    
-    function doCellDivision(cell){
+
+    function doCellDivision (cell) {
       let daughterCells = []
 
       cell = interphase(cell)

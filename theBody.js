@@ -6,7 +6,19 @@ const body = {
     'capillaries',
     'veins'
   ],
-  endocrineSystem : ['glands'],
+  endocrineSystem: ['glands'],
+  integumentarySystem: [
+    {
+      skin: [
+        'glands',
+        'sensory receptors',
+        'vessels',
+        'immune cells',
+        'antibodies',
+        'layers of cells and keratin'
+      ]
+    }
+  ],
   lymphaticSystem: ['vessels', 'nodes'],
   muscularSystem: ['skeletal muscles', 'cardiac muscle', 'smooth muscle'],
   nervousSystem: [
