@@ -59,8 +59,7 @@ describe('1. Systems of The Body', () => {
         peripheral: [
           'nerves',
           {
-            visceral:
-              'involuntary flight-or-fight and vegetative functions'
+            visceral: 'involuntary flight-or-fight and vegetative functions'
           }
         ]
       }
@@ -100,11 +99,36 @@ describe('1. Systems of The Body', () => {
     })
   })
 
-  it('i. the respitory system consists of the upper and lower respiratory tracts', ()=>{
-    const respiratorySystem = ['upper respiratory tract, lower respiratory tract']
+  it('i. the respitory system consists of the upper and lower respiratory tracts', () => {
+    const respiratorySystem = [
+      'upper respiratory tract, lower respiratory tract'
+    ]
 
-       respiratorySystem.forEach(part => {
+    respiratorySystem.forEach(part => {
       expect(theBody.systems.respiratory).toContain(part)
+    })
+  })
+
+  it('j. the digestive system consists of an alimentary canal and glands. Glands include the liver, the pancreas, and the biliary system', () => {
+    const digestiveSystem = [
+      'alimentary canal',
+      {
+        glands: [
+          'liver',
+          'pancreas',
+          { biliarySystem: ['gallbladder', 'ducts related to gallbladder'] }
+        ]
+      }
+    ]
+
+    digestiveSystem.forEach((part, index) => {
+      if (typeof part === 'string') {
+        expect(theBody.systems.digestive[index]).toEqual(part)
+      } else {
+        expect(theBody.systems.digestive[index]).toEqual(
+          expect.objectContaining(part)
+        )
+      }
     })
   })
 })

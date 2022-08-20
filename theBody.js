@@ -7,6 +7,16 @@ const body = {
       'capillaries',
       'veins'
     ],
+    digestive: [
+      'alimentary canal',
+      {
+        glands: [
+          'liver',
+          'pancreas',
+          { biliarySystem: ['gallbladder', 'ducts related to gallbladder'] }
+        ]
+      }
+    ],
     endocrine: ['glands'],
     integumentary: [
       {
