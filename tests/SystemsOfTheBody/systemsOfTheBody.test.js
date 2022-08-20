@@ -8,13 +8,13 @@ describe('0. The Body ', () => {
 
 describe('1. Systems of The Body', () => {
   it(`a. the skeletal system should consist of bones and and ligaments that secure the bones at joints`, () => {
-    expect(theBody.skeletalSystem).toContain('bones')
-    expect(theBody.skeletalSystem).toContain('ligaments')
+    expect(theBody.systems.skeletal).toContain('bones')
+    expect(theBody.systems.skeletal).toContain('ligaments')
   })
 
   it(`b. the articular system should consist of both fixed and moveable joints`, () => {
-    expect(theBody.articularSystem).toContain('fixed joints')
-    expect(theBody.articularSystem).toContain('moveable joints')
+    expect(theBody.systems.articular).toContain('fixed joints')
+    expect(theBody.systems.articular).toContain('moveable joints')
   })
 
   it('c. the muscular system includes: skeletal muscles, cardiac muscle, smooth muscle', () => {
@@ -25,7 +25,7 @@ describe('1. Systems of The Body', () => {
     ]
 
     muscularSystemMuscles.forEach(muscle => {
-      expect(theBody.muscularSystem).toContain(muscle)
+      expect(theBody.systems.muscular).toContain(muscle)
     })
   })
 
@@ -38,7 +38,7 @@ describe('1. Systems of The Body', () => {
     ]
 
     cardiovascularSystem.forEach(part => {
-      expect(theBody.cardiovascularSystem).toContain(part)
+      expect(theBody.systems.cardiovascular).toContain(part)
     })
   })
 
@@ -47,19 +47,19 @@ describe('1. Systems of The Body', () => {
     const lymphaticSystem = ['vessels', 'nodes']
 
     lymphaticSystem.forEach(part => {
-      expect(theBody.lymphaticSystem).toContain(part)
+      expect(theBody.systems.lymphatic).toContain(part)
     })
   })
 
   it('f. the nervous system includes the central nervous system and the peripheral nervous system', () => {
     // recovers bodies tissue flueds and returns them to the heart
     const nervousSystem = [
-      { centralNervousSystem: ['brain', 'spinal cord'] },
+      { central: ['brain', 'spinal cord'] },
       {
-        peripheralNervousSystem: [
+        peripheral: [
           'nerves',
           {
-            visceralNervousSystem:
+            visceral:
               'involuntary flight-or-fight and vegetative functions'
           }
         ]
@@ -67,7 +67,7 @@ describe('1. Systems of The Body', () => {
     ]
 
     nervousSystem.forEach((part, index) => {
-      expect(theBody.nervousSystem[index]).toEqual(
+      expect(theBody.systems.nervous[index]).toEqual(
         expect.objectContaining(part)
       )
     })
@@ -77,7 +77,7 @@ describe('1. Systems of The Body', () => {
     const endocrineSystem = ['glands']
 
     endocrineSystem.forEach(part => {
-      expect(theBody.endocrineSystem).toContain(part)
+      expect(theBody.systems.endocrine).toContain(part)
     })
   })
 
@@ -94,7 +94,7 @@ describe('1. Systems of The Body', () => {
     const integumentarySystem = [{ skin }]
 
     integumentarySystem.forEach((part, index) => {
-      expect(theBody.integumentarySystem[index]).toEqual(
+      expect(theBody.systems.integumentary[index]).toEqual(
         expect.objectContaining(part)
       )
     })

@@ -1,39 +1,41 @@
 const body = {
-  articularSystem: ['fixed joints', 'moveable joints'],
-  cardiovascularSystem: [
-    'four-chambered heart',
-    'arteries',
-    'capillaries',
-    'veins'
-  ],
-  endocrineSystem: ['glands'],
-  integumentarySystem: [
-    {
-      skin: [
-        'glands',
-        'sensory receptors',
-        'vessels',
-        'immune cells',
-        'antibodies',
-        'layers of cells and keratin'
-      ]
-    }
-  ],
-  lymphaticSystem: ['vessels', 'nodes'],
-  muscularSystem: ['skeletal muscles', 'cardiac muscle', 'smooth muscle'],
-  nervousSystem: [
-    { centralNervousSystem: ['brain', 'spinal cord'] },
-    {
-      peripheralNervousSystem: [
-        'nerves',
-        {
-          visceralNervousSystem:
-            'involuntary flight-or-fight and vegetative functions'
-        }
-      ]
-    }
-  ],
-  skeletalSystem: ['bones', 'ligaments']
+  systems: {
+    articular: ['fixed joints', 'moveable joints'],
+    cardiovascular: [
+      'four-chambered heart',
+      'arteries',
+      'capillaries',
+      'veins'
+    ],
+    endocrine: ['glands'],
+    integumentary: [
+      {
+        skin: [
+          'glands',
+          'sensory receptors',
+          'vessels',
+          'immune cells',
+          'antibodies',
+          'layers of cells and keratin'
+        ]
+      }
+    ],
+    lymphatic: ['vessels', 'nodes'],
+    muscular: ['skeletal muscles', 'cardiac muscle', 'smooth muscle'],
+    nervous: [
+      { central: ['brain', 'spinal cord'] },
+      {
+        peripheral: [
+          'nerves',
+          {
+            visceral:
+              'involuntary flight-or-fight and vegetative functions'
+          }
+        ]
+      }
+    ],
+    skeletal: ['bones', 'ligaments']
+  }
 }
 
 module.exports = {
