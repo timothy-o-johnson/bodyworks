@@ -1,5 +1,5 @@
 const body = {
-  // generalizedCell: {},
+  generalizedCell: {organelles: []},
   systems: {
     articular: ['fixed joints', 'moveable joints'],
     cardiovascular: [

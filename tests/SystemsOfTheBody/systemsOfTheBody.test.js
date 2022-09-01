@@ -178,13 +178,17 @@ describe('1. Systems of The Body', () => {
   })
 })
 
-// describe('2. Cells & Tissues', ()=>{
-//   describe('b. genernalized cell', ()=>{
-//     it('i. should be defined', ()=>{
-//       expect(theBody.generalizedCell).toBeDefined()
-//     })
-//   })
-// })
+describe('2. Cells & Tissues', ()=>{
+  describe('b. genernalized cell...', ()=>{
+    it('i. should be defined', ()=>{
+      expect(theBody.generalizedCell).toBeDefined()
+    })
+
+    it('ii. should contain organelles', ()=>{
+      expect(theBody.generalizedCell.organelles).toBeDefined()
+    })
+  })
+})
 
 describe('2. Processes', () => {
   describe('a. cell division/mitosis', () => {
