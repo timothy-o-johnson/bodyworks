@@ -168,7 +168,23 @@ describe('1. Systems of The Body', () => {
       expect(theBody.systems.femaleReproductive).toContain(part)
     })
   })
+
+  it('n. the male reproductive system consists of seminal vesicle, ductus deferens, prostate, uretha/penis, testis', ()=>{
+    const maleReproductiveSystem = ['seminal vesicle', 'ductus deferens', 'prostate', 'uretha/penis', 'testis']
+    
+    maleReproductiveSystem.forEach(part => {
+      expect(theBody.systems.maleReproductive).toContain(part)
+    })
+  })
 })
+
+// describe('2. Cells & Tissues', ()=>{
+//   describe('b. genernalized cell', ()=>{
+//     it('i. should be defined', ()=>{
+//       expect(theBody.generalizedCell).toBeDefined()
+//     })
+//   })
+// })
 
 describe('2. Processes', () => {
   describe('a. cell division/mitosis', () => {

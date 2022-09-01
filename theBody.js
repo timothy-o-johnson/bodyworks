@@ -1,4 +1,5 @@
 const body = {
+  // generalizedCell: {},
   systems: {
     articular: ['fixed joints', 'moveable joints'],
     cardiovascular: [
@@ -44,6 +45,7 @@ const body = {
       }
     ],
     lymphatic: ['vessels', 'nodes'],
+    maleReproductive: ['seminal vesicle', 'ductus deferens', 'prostate', 'uretha/penis', 'testis'],
     muscular: ['skeletal muscles', 'cardiac muscle', 'smooth muscle'],
     nervous: [
       { central: ['brain', 'spinal cord'] },
