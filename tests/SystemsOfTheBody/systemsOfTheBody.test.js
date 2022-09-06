@@ -161,36 +161,76 @@ describe('1. Systems of The Body', () => {
     })
   })
 
-  it('m. the female reproductive system consists of uterine tube, uterus, ovaries, vagina', ()=>{
-    const femaleReproductiveSystem = ['uterine tube', 'uterus', 'ovaries', 'vagina']
-    
+  it('m. the female reproductive system consists of uterine tube, uterus, ovaries, vagina', () => {
+    const femaleReproductiveSystem = [
+      'uterine tube',
+      'uterus',
+      'ovaries',
+      'vagina'
+    ]
+
     femaleReproductiveSystem.forEach(part => {
       expect(theBody.systems.femaleReproductive).toContain(part)
     })
   })
 
-  it('n. the male reproductive system consists of seminal vesicle, ductus deferens, prostate, uretha/penis, testis', ()=>{
-    const maleReproductiveSystem = ['seminal vesicle', 'ductus deferens', 'prostate', 'uretha/penis', 'testis']
-    
+  it('n. the male reproductive system consists of seminal vesicle, ductus deferens, prostate, uretha/penis, testis', () => {
+    const maleReproductiveSystem = [
+      'seminal vesicle',
+      'ductus deferens',
+      'prostate',
+      'uretha/penis',
+      'testis'
+    ]
+
     maleReproductiveSystem.forEach(part => {
       expect(theBody.systems.maleReproductive).toContain(part)
     })
   })
 })
 
-describe('2. Cells & Tissues', ()=>{
-  describe('b. genernalized cell...', ()=>{
-    it('i. should be defined', ()=>{
+describe('2. Cells & Tissues', () => {
+  describe('b. genernalized cell...', () => {
+    it('i. should be defined', () => {
       expect(theBody.generalizedCell).toBeDefined()
     })
 
-    it('ii. should contain organelles', ()=>{
+    it('ii. should contain organelles', () => {
       expect(theBody.generalizedCell.organelles).toBeDefined()
+    })
+
+    it('iii. cell organelles should consist of a cell membrane, nuclear membrane, nucleoplasm, nucleolus, cytoplasm, endoplasmic reticulum (rough and smooth), ribosom, golgi complex, mitochrondrion, vacuole, lysosome, centriole, microtubule, microfilament', () => {
+      const cellOrganelles = [
+        'cellMembrane',
+        'nuclearMembrane',
+        'nucleoplasm',
+        'nucleolus',
+        'cytoplasm',
+        { endoplasmicReticulum: ['rough', 'smooth'] },
+        'ribosome',
+        'golgiComplex',
+        'mitochrondrion',
+        'vacuole',
+        'lysosome',
+        'centriole',
+        'microtubule',
+        'microfilament'
+      ]
+
+      cellOrganelles.forEach((part, index) => {
+        if (typeof part === 'string') {
+          expect(theBody.generalizedCell.organelles).toContain(part)
+        } else {
+          expect(theBody.generalizedCell.organelles[index]).toEqual(
+            expect.objectContaining(part)
+          )
+        }
+      })
     })
   })
 })
 
-describe('2. Processes', () => {
+describe('3. Processes', () => {
   describe('a. cell division/mitosis', () => {
     cell = {}
 

@@ -1,5 +1,22 @@
 const body = {
-  generalizedCell: {organelles: []},
+  generalizedCell: {
+    organelles: [
+      'cellMembrane',
+      'nuclearMembrane',
+      'nucleoplasm',
+      'nucleolus',
+      'cytoplasm',
+      { endoplasmicReticulum: ['rough', 'smooth'] },
+      'ribosome',
+      'golgiComplex',
+      'mitochrondrion',
+      'vacuole',
+      'lysosome',
+      'centriole',
+      'microtubule',
+      'microfilament'
+    ]
+  },
   systems: {
     articular: ['fixed joints', 'moveable joints'],
     cardiovascular: [
@@ -45,7 +62,13 @@ const body = {
       }
     ],
     lymphatic: ['vessels', 'nodes'],
-    maleReproductive: ['seminal vesicle', 'ductus deferens', 'prostate', 'uretha/penis', 'testis'],
+    maleReproductive: [
+      'seminal vesicle',
+      'ductus deferens',
+      'prostate',
+      'uretha/penis',
+      'testis'
+    ],
     muscular: ['skeletal muscles', 'cardiac muscle', 'smooth muscle'],
     nervous: [
       { central: ['brain', 'spinal cord'] },
