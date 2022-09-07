@@ -231,8 +231,19 @@ describe('2. Cells & Tissues', () => {
 })
 
 describe('3. Processes', () => {
-  describe('a. cell division/mitosis', () => {
+  it('a. should be defined', ()=>{
+    expect(theBody.processes).toBeDefined()
+  })
+
+  describe('b. cell division/mitosis', () => {
     cell = {}
+
+    describe('i. interphase()...', ()=>{
+      it.todo('A. should be defined')
+      it.todo('A. should duplicate DNA (in chromatin)')
+      it.todo('B. should divede paired centrioles in centrosome')
+      it.todo('x. should return a cell')
+    })
 
     function doCellDivision (cell) {
       let daughterCells = []
@@ -247,5 +258,6 @@ describe('3. Processes', () => {
     }
   })
 })
+
 
 // testing

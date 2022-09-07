@@ -17,6 +17,7 @@ const body = {
       'microfilament'
     ]
   },
+  processes: {},
   systems: {
     articular: ['fixed joints', 'moveable joints'],
     cardiovascular: [
@@ -84,6 +85,12 @@ const body = {
     respiratory: ['upper respiratory tract, lower respiratory tract'],
     skeletal: ['bones', 'ligaments'],
     urinary: ['kidneys', 'ureter', 'urinary bladder', 'urethra']
+  },
+  vocabulary: {
+    'generalized cell': {
+      cytoskeleton: '',
+      pseudopods: ''
+    }
   }
 }
 
