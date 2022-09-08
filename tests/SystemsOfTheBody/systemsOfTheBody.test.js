@@ -246,8 +246,8 @@ describe('3. Processes', () => {
     cell = {}
 
     describe('i. interphase()...', ()=>{
-      xit('A. should be defined', ()=>{
-        expect(theBody.processes).toBeDefined()
+      it('A. should be defined', ()=>{
+        expect(theBody.processes.cellDivisionMitosis().interphase).toBeDefined()
       })
       it.todo('B. should duplicate DNA (in chromatin)')
       it.todo('C. should divide paired centrioles in centrosome')

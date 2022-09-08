@@ -18,7 +18,11 @@ const body = {
     ]
   },
   processes: {
-    cellDivisionMitosis: () => {}
+    cellDivisionMitosis: () => {
+      return {interphase}
+
+      function interphase(){}
+    }
   },
   systems: {
     articular: ['fixed joints', 'moveable joints'],
