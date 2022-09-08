@@ -199,7 +199,11 @@ describe('2. Cells & Tissues', () => {
       expect(theBody.generalizedCell.organelles).toBeDefined()
     })
 
-    it('iii. cell organelles should consist of a cell membrane, nuclear membrane, nucleoplasm, nucleolus, cytoplasm, endoplasmic reticulum (rough and smooth), ribosom, golgi complex, mitochrondrion, vacuole, lysosome, centriole, microtubule, microfilament', () => {
+    it(`iii. cell organelles should consist of a cell membrane, 
+    nuclear membrane, nucleoplasm, nucleolus, cytoplasm, endoplasmic 
+    reticulum (rough and smooth), ribosome, golgi complex, 
+    mitochrondrion, vacuole, lysosome, centriole, microtubule, 
+    microfilament`, () => {
       const cellOrganelles = [
         'cellMembrane',
         'nuclearMembrane',
@@ -235,13 +239,18 @@ describe('3. Processes', () => {
     expect(theBody.processes).toBeDefined()
   })
 
-  describe('b. cell division/mitosis', () => {
+  describe('b. cellDivisionMitosis()', () => {
+    it('i. should be defined', ()=>{
+      expect(theBody.processes.cellDivisionMitosis).toBeDefined()
+    })
     cell = {}
 
     describe('i. interphase()...', ()=>{
-      it.todo('A. should be defined')
-      it.todo('A. should duplicate DNA (in chromatin)')
-      it.todo('B. should divede paired centrioles in centrosome')
+      xit('A. should be defined', ()=>{
+        expect(theBody.processes).toBeDefined()
+      })
+      it.todo('B. should duplicate DNA (in chromatin)')
+      it.todo('C. should divide paired centrioles in centrosome')
       it.todo('x. should return a cell')
     })
 

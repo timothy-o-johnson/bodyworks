@@ -17,7 +17,9 @@ const body = {
       'microfilament'
     ]
   },
-  processes: {},
+  processes: {
+    cellDivisionMitosis: () => {}
+  },
   systems: {
     articular: ['fixed joints', 'moveable joints'],
     cardiovascular: [
