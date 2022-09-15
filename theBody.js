@@ -2,6 +2,7 @@ const body = {
   generalizedCell: {
     organelles: [
       'cellMembrane',
+      'chromatin',
       'nuclearMembrane',
       'nucleoplasm',
       'nucleolus',

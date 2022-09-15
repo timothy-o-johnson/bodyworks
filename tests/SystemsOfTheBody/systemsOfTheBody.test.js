@@ -191,11 +191,11 @@ describe('1. Systems of The Body', () => {
 
 describe('2. Cells & Tissues', () => {
   describe('b. genernalized cell...', () => {
-    it('i. should be defined', () => {
+    it('  i. should be defined', () => {
       expect(theBody.generalizedCell).toBeDefined()
     })
 
-    it('ii. should contain organelles', () => {
+    it(' ii. should contain organelles', () => {
       expect(theBody.generalizedCell.organelles).toBeDefined()
     })
 
@@ -221,32 +221,56 @@ describe('2. Cells & Tissues', () => {
         'microfilament'
       ]
 
-      cellOrganelles.forEach((part, index) => {
-        if (typeof part === 'string') {
-          expect(theBody.generalizedCell.organelles).toContain(part)
-        } else {
-          expect(theBody.generalizedCell.organelles[index]).toEqual(
-            expect.objectContaining(part)
-          )
+      cellOrganelles.forEach((cellOrganellePart, index) => {
+        const theBodyCellOrganelles = theBody.generalizedCell.organelles
+
+        if (typeof cellOrganellePart === 'string') {
+          expect(theBodyCellOrganelles).toContain(cellOrganellePart)
+        } else {// organelle is an object
+          
+          const organelleName = Object.keys(cellOrganellePart)[0]
+          let hasPartBeenFoundInBody = false
+
+          for (let i = 0; i < theBodyCellOrganelles.length; i++) {
+            const bodyOrganelle = theBodyCellOrganelles[i]
+            const bodyPartIsAlsoAnObject = typeof bodyOrganelle !== 'string'
+
+            if (bodyPartIsAlsoAnObject) {
+              const bodyPartName = Object.keys(bodyOrganelle)[0]
+              const bodyPartsAreTheSame = organelleName === bodyPartName
+
+              if (bodyPartsAreTheSame) {
+                expect(bodyOrganelle).toMatchObject(cellOrganellePart)
+                hasPartBeenFoundInBody = true
+                break
+              }
+            }
+          }
+
+          expect(hasPartBeenFoundInBody).toEqual(true)
         }
       })
+    })
+
+    it(' vi. cell organelles should contain chromatin (a diffuse network of DNA and related protein)', () => {
+      expect(theBody.generalizedCell.organelles).toContain('chromatin')
     })
   })
 })
 
 describe('3. Processes', () => {
-  it('a. should be defined', ()=>{
+  it('a. should be defined', () => {
     expect(theBody.processes).toBeDefined()
   })
 
   describe('b. cellDivisionMitosis()', () => {
-    it('i. should be defined', ()=>{
+    it('i. should be defined', () => {
       expect(theBody.processes.cellDivisionMitosis).toBeDefined()
     })
     cell = {}
 
-    describe('i. interphase()...', ()=>{
-      it('A. should be defined', ()=>{
+    describe('i. interphase()...', () => {
+      it('A. should be defined', () => {
         expect(theBody.processes.cellDivisionMitosis().interphase).toBeDefined()
       })
       it.todo('B. should duplicate DNA (in chromatin)')
@@ -267,6 +291,5 @@ describe('3. Processes', () => {
     }
   })
 })
-
 
 // testing
