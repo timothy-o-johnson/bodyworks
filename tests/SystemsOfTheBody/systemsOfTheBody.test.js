@@ -264,10 +264,62 @@ describe('3. Processes', () => {
     expect(theBody.processes).toBeDefined()
   })
 
-  describe('b. createCell()...', ()=>{
-    it('i. should be defined', ()=>{
+  describe('b. createCell()...', () => {
+    it(' i. should be defined', () => {
       expect(theBody.processes.createCell).toBeDefined()
     })
+
+    it(`ii. should create a cell object from the generalized cell's organelles`, () => {
+      const organelles = theBody.generalizedCell.organelles
+
+      const { cell } = theBody.processes.createCell(organelles)
+
+      // console.log(JSON.stringify(cell, '', ' '))
+
+      let expectedCell = {
+        shape: null
+      }
+
+      let expectedOrganelles = getExpectedOrganelles()
+
+      expect(cell.organelles).toEqual(
+        expect.objectContaining(expectedOrganelles)
+      )
+
+      expect(cell).toHaveProperty('shape')
+
+      function getExpectedOrganelles () {
+        let expectedOrganelles = {}
+
+        organelles.forEach(organelle => {
+          if (typeof organelle === 'string') {
+            expectedOrganelles[organelle] = {
+              count: 1
+            }
+          }
+
+          if (typeof organelle === 'object') {
+            const key = Object.keys(organelle)
+            expectedOrganelles[key] = {}
+
+            if (Array.isArray(organelle[key])) {
+              const subOrganelleArray = organelle[key]
+
+              subOrganelleArray.forEach(subOrganelle => {
+                expectedOrganelles[key][subOrganelle] = {
+                  count: 1
+                }
+              })
+            }
+          }
+        })
+
+        console.log(JSON.stringify(expectedCell, '', ' '))
+
+        return expectedOrganelles
+      }
+    })
+    
   })
 
   describe('c. cellDivisionMitosis()', () => {

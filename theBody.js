@@ -20,11 +20,46 @@ const body = {
   },
   processes: {
     cellDivisionMitosis: () => {
-      return {interphase}
+      return { interphase }
 
-      function interphase(){}
+      function interphase () {}
     },
-    createCell: ()=>{}
+    createCell: organelles => {
+      let cell = { organelles: {},  }
+
+      cell = addOrganelles(cell, organelles)
+
+      return { cell }
+
+      function addOrganelles (cell, organelles) {
+        let cellWithOrganelles = { ...cell }
+
+        organelles.forEach(organelle => {
+          if (typeof organelle === 'string') {
+            cellWithOrganelles['organelles'][organelle] = {
+              count: 1
+            }
+          }
+
+          if (typeof organelle === 'object') {
+            const key = Object.keys(organelle)
+            cellWithOrganelles['organelles'][key] = {}
+
+            if (Array.isArray(organelle[key])) {
+              const subOrganelleArray = organelle[key]
+
+              subOrganelleArray.forEach(subOrganelle => {
+                cellWithOrganelles['organelles'][key][subOrganelle] = {
+                  count: 1
+                }
+              })
+            }
+          }
+        })
+
+        return cellWithOrganelles
+      }
+    }
   },
   systems: {
     articular: ['fixed joints', 'moveable joints'],
