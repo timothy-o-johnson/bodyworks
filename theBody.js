@@ -23,7 +23,8 @@ const body = {
       return {interphase}
 
       function interphase(){}
-    }
+    },
+    createCell: ()=>{}
   },
   systems: {
     articular: ['fixed joints', 'moveable joints'],
@@ -94,6 +95,7 @@ const body = {
     urinary: ['kidneys', 'ureter', 'urinary bladder', 'urethra']
   },
   vocabulary: {
+    // vocabulary mentioned but not explained
     'generalized cell': {
       cytoskeleton: '',
       pseudopods: ''

@@ -226,8 +226,9 @@ describe('2. Cells & Tissues', () => {
 
         if (typeof cellOrganellePart === 'string') {
           expect(theBodyCellOrganelles).toContain(cellOrganellePart)
-        } else {// organelle is an object
-          
+        } else {
+          // organelle is an object
+
           const organelleName = Object.keys(cellOrganellePart)[0]
           let hasPartBeenFoundInBody = false
 
@@ -263,7 +264,13 @@ describe('3. Processes', () => {
     expect(theBody.processes).toBeDefined()
   })
 
-  describe('b. cellDivisionMitosis()', () => {
+  describe('b. createCell()...', ()=>{
+    it('i. should be defined', ()=>{
+      expect(theBody.processes.createCell).toBeDefined()
+    })
+  })
+
+  describe('c. cellDivisionMitosis()', () => {
     it('i. should be defined', () => {
       expect(theBody.processes.cellDivisionMitosis).toBeDefined()
     })
