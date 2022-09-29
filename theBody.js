@@ -25,7 +25,7 @@ const body = {
       function interphase () {}
     },
     createCell: organelles => {
-      let cell = { organelles: {},  }
+      let cell = { organelles: {}, shape: null }
 
       cell = addOrganelles(cell, organelles)
 

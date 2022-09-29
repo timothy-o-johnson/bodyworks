@@ -1,5 +1,7 @@
 const theBody = require('../../theBody').body
 
+const organelles = theBody.generalizedCell.organelles
+
 describe('0. The Body ', () => {
   it('should be defined', () => {
     expect(theBody).toBeDefined()
@@ -269,8 +271,18 @@ describe('3. Processes', () => {
       expect(theBody.processes.createCell).toBeDefined()
     })
 
+    it(' ii. should contain the following properties: shape, organelles', ()=>{
+      const cellProperties = ['organelles','shape']
+      const { cell } = theBody.processes.createCell(organelles)
+      
+      cellProperties.forEach(property =>{
+        expect(cell).toHaveProperty(property)
+      })
+
+    })
+
     it(`ii. should create a cell object from the generalized cell's organelles`, () => {
-      const organelles = theBody.generalizedCell.organelles
+      
 
       const { cell } = theBody.processes.createCell(organelles)
 
@@ -285,8 +297,6 @@ describe('3. Processes', () => {
       expect(cell.organelles).toEqual(
         expect.objectContaining(expectedOrganelles)
       )
-
-      expect(cell).toHaveProperty('shape')
 
       function getExpectedOrganelles () {
         let expectedOrganelles = {}
@@ -319,7 +329,7 @@ describe('3. Processes', () => {
         return expectedOrganelles
       }
     })
-    
+
   })
 
   describe('c. cellDivisionMitosis()', () => {
