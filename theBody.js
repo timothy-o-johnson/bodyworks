@@ -26,7 +26,8 @@ const body = {
       function interphase (cell) {
         let cellAfterInterphase = JSON.parse(JSON.stringify(cell))
 
-         cellAfterInterphase.organelles.chromatin.count *= 2
+        cellAfterInterphase.organelles.chromatin.count *= 2
+        cellAfterInterphase.organelles.centriole.count *= 2
         
         return { cell, cellAfterInterphase }
       }

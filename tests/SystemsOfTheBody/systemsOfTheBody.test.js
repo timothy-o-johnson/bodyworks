@@ -333,7 +333,6 @@ describe('3. Processes', () => {
     it('i. should be defined', () => {
       expect(theBody.processes.cellDivisionMitosis).toBeDefined()
     })
-    // cell = {}
 
     describe('i. interphase()...', () => {
       it('A. should be defined', () => {
@@ -341,22 +340,29 @@ describe('3. Processes', () => {
       })
 
       it('B. should duplicate DNA (in chromatin)', () => {
-        const cell = 
-        JSON.parse(JSON.stringify(newCell))
-
-        console.log('test B', JSON.stringify(cell, '', ' '))
+        const cell = JSON.parse(JSON.stringify(newCell))
 
         const interphase = theBody.processes.cellDivisionMitosis().interphase
 
         const { cellAfterInterphase } = interphase(cell)
 
-        // console.log( JSON.stringify(cellAfterInterphase, '', ' '))
-
         const chromatinCount = cellAfterInterphase.organelles.chromatin.count
 
         expect(chromatinCount).toEqual(2 * cell.organelles.chromatin.count)
       })
-      it.todo('C. should divide paired centrioles in centrosome')
+
+      it('C. should divide paired centrioles in centrosome', ()=>{
+        const cell = JSON.parse(JSON.stringify(newCell))
+
+        const interphase = theBody.processes.cellDivisionMitosis().interphase
+
+        const { cellAfterInterphase } = interphase(cell)
+
+        const centrioleCount = cellAfterInterphase.organelles.centriole.count
+
+        expect(centrioleCount).toEqual(2 * cell.organelles.centriole.count)
+      })
+
       it.todo('x. should return a cell')
     })
 
