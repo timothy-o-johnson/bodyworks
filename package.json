@@ -4,7 +4,8 @@
   "description": "an attempt to model biology of the human body",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watch --verbose --coverage"
+    "test": "jest --watch --verbose --coverage",
+    "test:debugger": "--inspect-brk node_modules/.bin/jest --runInBand"
   },
   "repository": {
     "type": "git",
