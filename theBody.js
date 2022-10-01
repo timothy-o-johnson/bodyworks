@@ -20,31 +20,43 @@ const body = {
   },
   processes: {
     cellDivisionMitosis: () => {
+
       return { interphase }
 
-      function interphase () {}
+      function interphase (cell) {
+        let cellAfterInterphase = JSON.parse(JSON.stringify(cell))
+
+         cellAfterInterphase.organelles.chromatin.count *= 2
+        
+        return { cell, cellAfterInterphase }
+      }
     },
     createCell: organelles => {
       let cell = { organelles: {}, shape: null }
 
       cell = addOrganelles(cell, organelles)
 
-      return { cell }
+      return cell
 
       function addOrganelles (cell, organelles) {
         let cellWithOrganelles = { ...cell }
 
         organelles.forEach(organelle => {
+          // if organelle is a string,
+          // make each organelle an object and add count property
           if (typeof organelle === 'string') {
             cellWithOrganelles['organelles'][organelle] = {
               count: 1
             }
           }
 
+          // if organelle is an object
           if (typeof organelle === 'object') {
             const key = Object.keys(organelle)
             cellWithOrganelles['organelles'][key] = {}
 
+            // and that object has an array,
+            // convert the array elements into objects and add count property
             if (Array.isArray(organelle[key])) {
               const subOrganelleArray = organelle[key]
 

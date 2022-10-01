@@ -1,6 +1,7 @@
 const theBody = require('../../theBody').body
 
 const organelles = theBody.generalizedCell.organelles
+const newCell = theBody.processes.createCell(organelles)
 
 describe('0. The Body ', () => {
   it('should be defined', () => {
@@ -271,20 +272,17 @@ describe('3. Processes', () => {
       expect(theBody.processes.createCell).toBeDefined()
     })
 
-    it(' ii. should contain the following properties: shape, organelles', ()=>{
-      const cellProperties = ['organelles','shape']
-      const { cell } = theBody.processes.createCell(organelles)
-      
-      cellProperties.forEach(property =>{
+    it(' ii. should contain the following properties: shape, organelles', () => {
+      const cellProperties = ['organelles', 'shape']
+      const cell = theBody.processes.createCell(organelles)
+
+      cellProperties.forEach(property => {
         expect(cell).toHaveProperty(property)
       })
-
     })
 
     it(`ii. should create a cell object from the generalized cell's organelles`, () => {
-      
-
-      const { cell } = theBody.processes.createCell(organelles)
+      const cell = theBody.processes.createCell(organelles)
 
       // console.log(JSON.stringify(cell, '', ' '))
 
@@ -329,20 +327,35 @@ describe('3. Processes', () => {
         return expectedOrganelles
       }
     })
-
   })
 
   describe('c. cellDivisionMitosis()', () => {
     it('i. should be defined', () => {
       expect(theBody.processes.cellDivisionMitosis).toBeDefined()
     })
-    cell = {}
+    // cell = {}
 
     describe('i. interphase()...', () => {
       it('A. should be defined', () => {
         expect(theBody.processes.cellDivisionMitosis().interphase).toBeDefined()
       })
-      it.todo('B. should duplicate DNA (in chromatin)')
+
+      it('B. should duplicate DNA (in chromatin)', () => {
+        const cell = 
+        JSON.parse(JSON.stringify(newCell))
+
+        console.log('test B', JSON.stringify(cell, '', ' '))
+
+        const interphase = theBody.processes.cellDivisionMitosis().interphase
+
+        const { cellAfterInterphase } = interphase(cell)
+
+        // console.log( JSON.stringify(cellAfterInterphase, '', ' '))
+
+        const chromatinCount = cellAfterInterphase.organelles.chromatin.count
+
+        expect(chromatinCount).toEqual(2 * cell.organelles.chromatin.count)
+      })
       it.todo('C. should divide paired centrioles in centrosome')
       it.todo('x. should return a cell')
     })
