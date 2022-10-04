@@ -21,9 +21,9 @@ const body = {
   processes: {
     cellDivisionMitosis: () => {
 
-      return { interphase, enterProphase }
+      return { enterInterphase, enterProphase }
 
-      function interphase (cell) {
+      function enterInterphase (cell) {
         let cellAfterInterphase = JSON.parse(JSON.stringify(cell))
 
         cellAfterInterphase.organelles.chromatin.count *= 2

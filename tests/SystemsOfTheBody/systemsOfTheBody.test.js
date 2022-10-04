@@ -338,17 +338,17 @@ describe('3. Processes', () => {
       expect(processes.cellDivisionMitosis).toBeDefined()
     })
 
-    describe('i. interphase()...', () => {
+    describe('  i. enterInterphase()...', () => {
       it('A. should be defined', () => {
-        expect(processes.cellDivisionMitosis().interphase).toBeDefined()
+        expect(processes.cellDivisionMitosis().enterInterphase).toBeDefined()
       })
 
       it('B. should duplicate DNA (in chromatin)', () => {
         const cell = JSON.parse(JSON.stringify(newCell))
 
-        const interphase = processes.cellDivisionMitosis().interphase
+        const enterInterphase = processes.cellDivisionMitosis().enterInterphase
 
-        const { cellAfterInterphase } = interphase(cell)
+        const { cellAfterInterphase } = enterInterphase(cell)
 
         const chromatinCount = cellAfterInterphase.organelles.chromatin.count
 
@@ -358,9 +358,9 @@ describe('3. Processes', () => {
       it('C. should divide paired centrioles in centrosome', ()=>{
         const cell = JSON.parse(JSON.stringify(newCell))
 
-        const interphase = processes.cellDivisionMitosis().interphase
+        const enterInterphase = processes.cellDivisionMitosis().enterInterphase
 
-        const { cellAfterInterphase } = interphase(cell)
+        const { cellAfterInterphase } = enterInterphase(cell)
 
         const centrioleCount = cellAfterInterphase.organelles.centriole.count
 
@@ -368,7 +368,7 @@ describe('3. Processes', () => {
       })
     })
 
-    describe('ii. enterProphase()...', ()=>{
+    describe(' ii. enterProphase()...', ()=>{
       it('A. should be defined', ()=>{
         expect(processes.cellDivisionMitosis().enterProphase).toBeDefined()
       })
