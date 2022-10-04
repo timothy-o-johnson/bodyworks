@@ -334,6 +334,8 @@ describe('3. Processes', () => {
   })
 
   describe('c. cellDivisionMitosis()... (p. 7)', () => {
+    const cell = JSON.parse(JSON.stringify(newCell))
+
     it('i. should be defined', () => {
       expect(processes.cellDivisionMitosis).toBeDefined()
     })
@@ -344,8 +346,6 @@ describe('3. Processes', () => {
       })
 
       it('B. should duplicate DNA (in chromatin)', () => {
-        const cell = JSON.parse(JSON.stringify(newCell))
-
         const enterInterphase = processes.cellDivisionMitosis().enterInterphase
 
         const { cellAfterInterphase } = enterInterphase(cell)
@@ -355,8 +355,10 @@ describe('3. Processes', () => {
         expect(chromatinCount).toEqual(2 * cell.organelles.chromatin.count)
       })
 
-      it('C. should divide paired centrioles in centrosome', ()=>{
-        const cell = JSON.parse(JSON.stringify(newCell))
+      it('C. should divide paired centrioles in centrosome', () => {
+        // let cell = newCell
+
+        // cell.organelles.chromatin.count = 1
 
         const enterInterphase = processes.cellDivisionMitosis().enterInterphase
 
@@ -368,15 +370,26 @@ describe('3. Processes', () => {
       })
     })
 
-    describe(' ii. enterProphase()...', ()=>{
-      it('A. should be defined', ()=>{
+    describe(' ii. enterProphase()...', () => {
+      it('A. should be defined', () => {
         expect(processes.cellDivisionMitosis().enterProphase).toBeDefined()
       })
 
-      it('B. should thicken, shorten, and coil dispersed chromatin to form condensed chromaitn chromosomes', ()=>{
-        // const cellAfterProphase = processes.prophase
+      it('B. should thicken, shorten, and coil dispersed chromatin to form condensed chromatin chromosomes', () => {
+        const expectedChromosomeCount = 2
+
+        const enterProphase = processes.cellDivisionMitosis().enterProphase
+
+        const cellAfterProphase = enterProphase(cell)
+
+        expect(cellAfterProphase.organelles.chromosome.count).toEqual(
+          expectedChromosomeCount
+        )
       })
+
+      it.todo('add chromosomes to list of standard cell properties')
     })
+
     function doCellDivision (cell) {
       let daughterCells = []
 

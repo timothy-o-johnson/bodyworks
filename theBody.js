@@ -20,7 +20,6 @@ const body = {
   },
   processes: {
     cellDivisionMitosis: () => {
-
       return { enterInterphase, enterProphase }
 
       function enterInterphase (cell) {
@@ -28,12 +27,19 @@ const body = {
 
         cellAfterInterphase.organelles.chromatin.count *= 2
         cellAfterInterphase.organelles.centriole.count *= 2
-        
+
         return { cell, cellAfterInterphase }
       }
 
-      function enterProphase(){
+      function enterProphase (cell) {
+        let cellAfterProphase = JSON.parse(JSON.stringify(cell))
+        const chromosomeCount = 2
 
+        if (cell.organelles.chromatin.count) {
+          cellAfterProphase.organelles.chromosome = { count: chromosomeCount }
+        }
+
+        return cellAfterProphase
       }
     },
     createCell: organelles => {
