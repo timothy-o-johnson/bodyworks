@@ -192,7 +192,7 @@ describe('1. Systems of The Body', () => {
   })
 })
 
-describe('2. Cells & Tissues', () => {
+describe('2. Cells & Tissues (p. 6)', () => {
   describe('b. genernalized cell...', () => {
     it('  i. should be defined', () => {
       expect(theBody.generalizedCell).toBeDefined()
@@ -263,18 +263,20 @@ describe('2. Cells & Tissues', () => {
 })
 
 describe('3. Processes', () => {
+  const processes = theBody.processes
+
   it('a. should be defined', () => {
-    expect(theBody.processes).toBeDefined()
+    expect(processes).toBeDefined()
   })
 
-  describe('b. createCell()...', () => {
+  describe('b. createCell()... (p.6)', () => {
     it(' i. should be defined', () => {
-      expect(theBody.processes.createCell).toBeDefined()
+      expect(processes.createCell).toBeDefined()
     })
 
     it(' ii. should contain the following properties: shape, organelles', () => {
       const cellProperties = ['organelles', 'shape']
-      const cell = theBody.processes.createCell(organelles)
+      const cell = processes.createCell(organelles)
 
       cellProperties.forEach(property => {
         expect(cell).toHaveProperty(property)
@@ -282,7 +284,7 @@ describe('3. Processes', () => {
     })
 
     it(`ii. should create a cell object from the generalized cell's organelles`, () => {
-      const cell = theBody.processes.createCell(organelles)
+      const cell = processes.createCell(organelles)
 
       // console.log(JSON.stringify(cell, '', ' '))
 
@@ -327,22 +329,24 @@ describe('3. Processes', () => {
         return expectedOrganelles
       }
     })
+
+    it.todo(' add proper counts')
   })
 
-  describe('c. cellDivisionMitosis()', () => {
+  describe('c. cellDivisionMitosis()... (p. 7)', () => {
     it('i. should be defined', () => {
-      expect(theBody.processes.cellDivisionMitosis).toBeDefined()
+      expect(processes.cellDivisionMitosis).toBeDefined()
     })
 
     describe('i. interphase()...', () => {
       it('A. should be defined', () => {
-        expect(theBody.processes.cellDivisionMitosis().interphase).toBeDefined()
+        expect(processes.cellDivisionMitosis().interphase).toBeDefined()
       })
 
       it('B. should duplicate DNA (in chromatin)', () => {
         const cell = JSON.parse(JSON.stringify(newCell))
 
-        const interphase = theBody.processes.cellDivisionMitosis().interphase
+        const interphase = processes.cellDivisionMitosis().interphase
 
         const { cellAfterInterphase } = interphase(cell)
 
@@ -354,7 +358,7 @@ describe('3. Processes', () => {
       it('C. should divide paired centrioles in centrosome', ()=>{
         const cell = JSON.parse(JSON.stringify(newCell))
 
-        const interphase = theBody.processes.cellDivisionMitosis().interphase
+        const interphase = processes.cellDivisionMitosis().interphase
 
         const { cellAfterInterphase } = interphase(cell)
 
@@ -362,10 +366,17 @@ describe('3. Processes', () => {
 
         expect(centrioleCount).toEqual(2 * cell.organelles.centriole.count)
       })
-
-      it.todo('x. should return a cell')
     })
 
+    describe('ii. enterProphase()...', ()=>{
+      it('A. should be defined', ()=>{
+        expect(processes.cellDivisionMitosis().enterProphase).toBeDefined()
+      })
+
+      it('B. should thicken, shorten, and coil dispersed chromatin to form condensed chromaitn chromosomes', ()=>{
+        // const cellAfterProphase = processes.prophase
+      })
+    })
     function doCellDivision (cell) {
       let daughterCells = []
 

@@ -21,7 +21,7 @@ const body = {
   processes: {
     cellDivisionMitosis: () => {
 
-      return { interphase }
+      return { interphase, enterProphase }
 
       function interphase (cell) {
         let cellAfterInterphase = JSON.parse(JSON.stringify(cell))
@@ -30,6 +30,10 @@ const body = {
         cellAfterInterphase.organelles.centriole.count *= 2
         
         return { cell, cellAfterInterphase }
+      }
+
+      function enterProphase(){
+
       }
     },
     createCell: organelles => {
