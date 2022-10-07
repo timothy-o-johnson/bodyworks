@@ -371,20 +371,35 @@ describe('3. Processes', () => {
     })
 
     describe(' ii. enterProphase()...', () => {
+      const enterProphase = processes.cellDivisionMitosis().enterProphase
+
       it('A. should be defined', () => {
-        expect(processes.cellDivisionMitosis().enterProphase).toBeDefined()
+        expect(enterProphase).toBeDefined()
       })
 
       it('B. should thicken, shorten, and coil dispersed chromatin to form condensed chromatin chromosomes', () => {
         const expectedChromosomeCount = 2
 
-        const enterProphase = processes.cellDivisionMitosis().enterProphase
-
         const cellAfterProphase = enterProphase(cell)
 
-        expect(cellAfterProphase.organelles.chromosome.count).toEqual(
+        expect(cellAfterProphase.organelles.chromosomes.length).toEqual(
           expectedChromosomeCount
         )
+      })
+
+      it('C. should ensure each chromosome is composed of two chromatids connected by a centromere', ()=>{
+        const cellAfterProphase = enterProphase(cell)
+        const chromosomes = cellAfterProphase.organelles.chromosomes
+        const chromosomeObj = {
+          centromere: 1,
+          chromatids: 2
+        }
+
+        expect(Array.isArray(chromosomes)).toBe(true)
+
+        chromosomes.forEach(chromosome =>{
+          expect(chromosome).toMatchObject(chromosomeObj)
+        })
       })
 
       it.todo('add chromosomes to list of standard cell properties')

@@ -33,13 +33,29 @@ const body = {
 
       function enterProphase (cell) {
         let cellAfterProphase = JSON.parse(JSON.stringify(cell))
+        
+        const cellHasChromatin = cell.organelles.chromatin.count
         const chromosomeCount = 2
 
-        if (cell.organelles.chromatin.count) {
-          cellAfterProphase.organelles.chromosome = { count: chromosomeCount }
+        if (cellHasChromatin) {
+          cellAfterProphase = addChromosomes(cellAfterProphase, chromosomeCount)
         }
 
         return cellAfterProphase
+
+        function addChromosomes (cell, chromosomeCount) {
+          let chromosomes = (cellAfterProphase.organelles.chromosomes = [])
+          const chromosomeObj = {
+            centromere: 1,
+            chromatids: 2
+          }
+
+          for (let i = 0; i < chromosomeCount; i++) {
+            chromosomes.push({ ...chromosomeObj })
+          }
+
+          return cell
+        }
       }
     },
     createCell: organelles => {
