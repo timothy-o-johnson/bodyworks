@@ -18,6 +18,7 @@ const body = {
       'microfilament'
     ]
   },
+
   processes: {
     cellDivisionMitosis: () => {
       return { enterInterphase, enterProphase }
@@ -41,6 +42,8 @@ const body = {
           cellAfterProphase = addChromosomes(cellAfterProphase, chromosomeCount)
         }
 
+        cellAfterProphase = dissolveNucleolusAndNuclearMembrane(cellAfterProphase)
+
         return cellAfterProphase
 
         function addChromosomes (cell, chromosomeCount) {
@@ -53,6 +56,13 @@ const body = {
           for (let i = 0; i < chromosomeCount; i++) {
             chromosomes.push({ ...chromosomeObj })
           }
+
+          return cell
+        }
+
+        function dissolveNucleolusAndNuclearMembrane(cell){
+          cell.organelles.nucleolus.count = 0
+          cell.organelles.nuclearMembrane.count = 0
 
           return cell
         }
@@ -100,6 +110,7 @@ const body = {
       }
     }
   },
+
   systems: {
     articular: ['fixed joints', 'moveable joints'],
     cardiovascular: [
@@ -168,6 +179,7 @@ const body = {
     skeletal: ['bones', 'ligaments'],
     urinary: ['kidneys', 'ureter', 'urinary bladder', 'urethra']
   },
+
   vocabulary: {
     // vocabulary mentioned but not explained
     'generalized cell': {

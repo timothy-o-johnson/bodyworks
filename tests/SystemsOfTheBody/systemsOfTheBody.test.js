@@ -387,7 +387,7 @@ describe('3. Processes', () => {
         )
       })
 
-      it('C. should ensure each chromosome is composed of two chromatids connected by a centromere', ()=>{
+      it('C. should ensure each chromosome is composed of two chromatids connected by a centromere', () => {
         const cellAfterProphase = enterProphase(cell)
         const chromosomes = cellAfterProphase.organelles.chromosomes
         const chromosomeObj = {
@@ -397,11 +397,23 @@ describe('3. Processes', () => {
 
         expect(Array.isArray(chromosomes)).toBe(true)
 
-        chromosomes.forEach(chromosome =>{
+        chromosomes.forEach(chromosome => {
           expect(chromosome).toMatchObject(chromosomeObj)
         })
       })
 
+      it.todo(
+        'D. each chromatid should have the equivalent amount of DNA of a chromosome'
+      )
+
+      it('E. should break up/dissolve the nuclear membrane and nucleolus', () => {
+        const cellAfterProphase = enterProphase(cell)
+        const {nucleolus, nuclearMembrane } = cellAfterProphase.organelles
+
+        expect(nucleolus.count).toEqual(0)
+        expect(nuclearMembrane.count).toEqual(0)
+      })
+      
       it.todo('add chromosomes to list of standard cell properties')
     })
 
