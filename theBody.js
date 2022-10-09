@@ -46,20 +46,35 @@ const body = {
           cellAfterProphase
         )
 
-        cellAfterProphase = separateCentriolesAndProjectAsters (cellAfterProphase)
+        cellAfterProphase = separateCentriolesAndProjectAsters(
+          cellAfterProphase
+        )
+
+        cellAfterProphase = addKinetochoresToCentromeres (cellAfterProphase)
 
         return cellAfterProphase
 
         function addChromosomes (cell, chromosomeCount) {
           let chromosomes = (cellAfterProphase.organelles.chromosomes = [])
           const chromosomeObj = {
-            centromere: 1,
+            centromeres: { count: 1, kinetochores: 0 },
             chromatids: 2
           }
 
           for (let i = 0; i < chromosomeCount; i++) {
             chromosomes.push({ ...chromosomeObj })
           }
+
+          return cell
+        }
+
+        function addKinetochoresToCentromeres (cell) {
+          const kinetochoreCount = 1
+          let chromosomes = cell.organelles.chromosomes
+
+          chromosomes.forEach(chromosome => {
+            chromosome.centromeres.kinetochores = kinetochoreCount
+          })
 
           return cell
         }

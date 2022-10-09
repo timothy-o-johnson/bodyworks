@@ -401,7 +401,7 @@ describe('3. Processes', () => {
         const cellAfterProphase = enterProphase(cell)
         const chromosomes = cellAfterProphase.organelles.chromosomes
         const chromosomeObj = {
-          centromere: 1,
+          centromeres: {count: 1, kinetochores: expect.anything()},
           chromatids: 2
         }
 
@@ -429,6 +429,15 @@ describe('3. Processes', () => {
         const { centriole } = cellAfterProphase.organelles
 
         expect(centriole.hasAsters).toBe(true)
+      })
+
+      it('G. should form kinetochores on the centromeres', ()=>{
+        const cellAfterProphase = enterProphase(cell)
+        const { chromosomes } = cellAfterProphase.organelles
+
+        chromosomes.forEach(chromosome =>{
+          expect(chromosome.centromeres.kinetochores).toBeGreaterThan(0)
+        })
       })
 
       it.todo('add chromosomes to list of standard cell properties')
