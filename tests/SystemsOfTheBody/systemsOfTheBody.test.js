@@ -363,20 +363,12 @@ describe('3. Processes', () => {
       })
 
       it('C. should divide paired centrioles in centrosome', () => {
-        // let cell = newCell
-
-        // cell.organelles.chromatin.count = 1
-
+   
         const enterInterphase = processes.cellDivisionMitosis().enterInterphase
-
         const { cellAfterInterphase } = enterInterphase(cell)
-
         const centrioleCount = cellAfterInterphase.organelles.centriole.count
 
-        expect(centrioleCount).toEqual(2 * cell.organelles.centriole.count)
-
-        console.log({centrioleCount});
-        
+        expect(centrioleCount).toEqual(2 * cell.organelles.centriole.count)        
       })
     })
 
@@ -456,5 +448,3 @@ describe('3. Processes', () => {
     }
   })
 })
-
-// testing
