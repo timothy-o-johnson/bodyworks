@@ -303,8 +303,15 @@ describe('3. Processes', () => {
 
         organelles.forEach(organelle => {
           if (typeof organelle === 'string') {
-            expectedOrganelles[organelle] = {
-              count: 1
+            if (organelle === 'centriole') {
+              expectedOrganelles[organelle] = {
+                count: 2,
+                hasAsters: false
+              }
+            } else {
+              expectedOrganelles[organelle] = {
+                count: 1
+              }
             }
           }
 
@@ -367,6 +374,9 @@ describe('3. Processes', () => {
         const centrioleCount = cellAfterInterphase.organelles.centriole.count
 
         expect(centrioleCount).toEqual(2 * cell.organelles.centriole.count)
+
+        console.log({centrioleCount});
+        
       })
     })
 
@@ -408,12 +418,19 @@ describe('3. Processes', () => {
 
       it('E. should break up/dissolve the nuclear membrane and nucleolus', () => {
         const cellAfterProphase = enterProphase(cell)
-        const {nucleolus, nuclearMembrane } = cellAfterProphase.organelles
+        const { nucleolus, nuclearMembrane } = cellAfterProphase.organelles
 
         expect(nucleolus.count).toEqual(0)
         expect(nuclearMembrane.count).toEqual(0)
       })
-      
+
+      it('F. should separate centrioles and move them to the opposite poles of the cell where they project microtubules (spindle fibers) called asters', () => {
+        const cellAfterProphase = enterProphase(cell)
+        const { centriole } = cellAfterProphase.organelles
+
+        expect(centriole.hasAsters).toBe(true)
+      })
+
       it.todo('add chromosomes to list of standard cell properties')
     })
 

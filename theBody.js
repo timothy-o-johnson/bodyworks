@@ -34,7 +34,7 @@ const body = {
 
       function enterProphase (cell) {
         let cellAfterProphase = JSON.parse(JSON.stringify(cell))
-        
+
         const cellHasChromatin = cell.organelles.chromatin.count
         const chromosomeCount = 2
 
@@ -42,7 +42,11 @@ const body = {
           cellAfterProphase = addChromosomes(cellAfterProphase, chromosomeCount)
         }
 
-        cellAfterProphase = dissolveNucleolusAndNuclearMembrane(cellAfterProphase)
+        cellAfterProphase = dissolveNucleolusAndNuclearMembrane(
+          cellAfterProphase
+        )
+
+        cellAfterProphase = separateCentriolesAndProjectAsters (cellAfterProphase)
 
         return cellAfterProphase
 
@@ -60,9 +64,15 @@ const body = {
           return cell
         }
 
-        function dissolveNucleolusAndNuclearMembrane(cell){
+        function dissolveNucleolusAndNuclearMembrane (cell) {
           cell.organelles.nucleolus.count = 0
           cell.organelles.nuclearMembrane.count = 0
+
+          return cell
+        }
+
+        function separateCentriolesAndProjectAsters (cell) {
+          cell.organelles.centriole.hasAsters = true
 
           return cell
         }
@@ -82,8 +92,15 @@ const body = {
           // if organelle is a string,
           // make each organelle an object and add count property
           if (typeof organelle === 'string') {
-            cellWithOrganelles['organelles'][organelle] = {
-              count: 1
+            if (organelle === 'centriole') {
+              cellWithOrganelles['organelles'][organelle] = {
+                count: 2,
+                hasAsters: false
+              }
+            } else {
+              cellWithOrganelles['organelles'][organelle] = {
+                count: 1
+              }
             }
           }
 
