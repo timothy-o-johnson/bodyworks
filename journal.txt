@@ -1,0 +1,16 @@
+2022-10-08
+did much research into how javascript handles objects in the context of passing, copying, and comparison
+
+2022-10-07
+it took us 30 min 
+😅
+but we have ensured that in the prophase of mitosis,  each chromosome is composed of two chromatids connected by a centromere.
+*** notes / thoughts ***
+- it's clear we are going to have to organize this code better
+- didn't really 'connect' the two chromatids so much as recognize that they must exist in proportion to each other
+- debating how helpful/readible this line is
+'let chromosomes = (cellAfterProphase.organelles.chromosomes = [])'  
+the goal is to quickly and simply work with chromosomes property, but perhaps two lines may be better.  
+- a little concerned about pass by value vs pass by reference may come back to bite us
+- after we model mitosis to our satisfaction, we are open to the idea that this project is beyond our resources and may look to join a team that's already 
+- and finally if anyone has any suggestions, please share!
