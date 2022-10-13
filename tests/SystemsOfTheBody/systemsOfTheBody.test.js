@@ -435,6 +435,13 @@ describe('3. Processes', () => {
       it.todo('add chromosomes to list of standard cell properties')
     })
 
+    describe('iii. enterMetaphase()...', ()=>{
+      const enterMetaphase = processes.cellDivisionMitosis().enterMetaphase
+      it('A. should be defined', ()=>{
+        expect(enterMetaphase).toBeDefined()
+      })
+    })
+
     function doCellDivision (cell) {
       let daughterCells = []
 
