@@ -1,13 +1,28 @@
-2022-10-08
+::2022-10-13::
+not particularly pleased with how we handled today's test but we are glad that we did something.
+don't like that it's descriptive rather than quantitative
+
+
+::2022-10-09::
+thinking we should go back to coloring this stuff rather than coding it-- oy
+
+finished enterProphase. 
+o didn't really model the location of centromeres in cellAfterProphase
+o inconsistent handling of counts (sometimes an organelle has a count property, sometimes the property is the count)
+o not sure how to model this: 'D. each chromatid should have the equivalent amount of DNA of a chromosome'
+-- learned that centromere is a region on a chromatid where the kinetochores assemble 
+
+::2022-10-08::
 did much research into how javascript handles objects in the context of passing, copying, and comparison
 
-2022-10-07
+::2022-10-07::
 it took us 30 min 
 😅
 but we have ensured that in the prophase of mitosis,  each chromosome is composed of two chromatids connected by a centromere.
+
 *** notes / thoughts ***
-- it's clear we are going to have to organize this code better
-- didn't really 'connect' the two chromatids so much as recognize that they must exist in proportion to each other
+o it's clear we are going to have to organize this code better
+o didn't really 'connect' the two chromatids so much as recognize that they must exist in proportion to each other
 - debating how helpful/readible this line is
 'let chromosomes = (cellAfterProphase.organelles.chromosomes = [])'  
 the goal is to quickly and simply work with chromosomes property, but perhaps two lines may be better.  
