@@ -94,7 +94,16 @@ const body = {
       }
 
       function enterMetaphase(cell){
+        let cellAfterMetaphase = JSON.parse(JSON.stringify(cell))
 
+        let centriole = cellAfterMetaphase.organelles.centriole
+
+        if(centriole.hasAsters){
+          centriole.astersHaveSpreadAcrossCell = true
+        }
+
+        
+        return {centriole}
       }
     },
     createCell: organelles => {
@@ -114,7 +123,8 @@ const body = {
             if (organelle === 'centriole') {
               cellWithOrganelles['organelles'][organelle] = {
                 count: 2,
-                hasAsters: false
+                hasAsters: false,
+                astersHaveSpreadAcrossCell: false
               }
             } else {
               cellWithOrganelles['organelles'][organelle] = {

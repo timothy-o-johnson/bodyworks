@@ -306,7 +306,8 @@ describe('3. Processes', () => {
             if (organelle === 'centriole') {
               expectedOrganelles[organelle] = {
                 count: 2,
-                hasAsters: false
+                hasAsters: false,
+                astersHaveSpreadAcrossCell: false
               }
             } else {
               expectedOrganelles[organelle] = {
@@ -363,12 +364,11 @@ describe('3. Processes', () => {
       })
 
       it('C. should divide paired centrioles in centrosome', () => {
-   
         const enterInterphase = processes.cellDivisionMitosis().enterInterphase
         const { cellAfterInterphase } = enterInterphase(cell)
         const centrioleCount = cellAfterInterphase.organelles.centriole.count
 
-        expect(centrioleCount).toEqual(2 * cell.organelles.centriole.count)        
+        expect(centrioleCount).toEqual(2 * cell.organelles.centriole.count)
       })
     })
 
@@ -393,7 +393,7 @@ describe('3. Processes', () => {
         const cellAfterProphase = enterProphase(cell)
         const chromosomes = cellAfterProphase.organelles.chromosomes
         const chromosomeObj = {
-          centromeres: {count: 1, kinetochores: expect.anything()},
+          centromeres: { count: 1, kinetochores: expect.anything() },
           chromatids: 2
         }
 
@@ -423,11 +423,11 @@ describe('3. Processes', () => {
         expect(centriole.hasAsters).toBe(true)
       })
 
-      it('G. should form kinetochores on the centromeres', ()=>{
+      it('G. should form kinetochores on the centromeres', () => {
         const cellAfterProphase = enterProphase(cell)
         const { chromosomes } = cellAfterProphase.organelles
 
-        chromosomes.forEach(chromosome =>{
+        chromosomes.forEach(chromosome => {
           expect(chromosome.centromeres.kinetochores).toBeGreaterThan(0)
         })
       })
@@ -435,10 +435,21 @@ describe('3. Processes', () => {
       it.todo('add chromosomes to list of standard cell properties')
     })
 
-    describe('iii. enterMetaphase()...', ()=>{
+    describe('iii. enterMetaphase()...', () => {
+
       const enterMetaphase = processes.cellDivisionMitosis().enterMetaphase
-      it('A. should be defined', ()=>{
+
+      it('A. should be defined', () => {
         expect(enterMetaphase).toBeDefined()
+      })
+
+      it('B. should develop strands of microtubes across the cell center from paired centrioles', () => {
+        let cell = JSON.parse(JSON.stringify(newCell))
+        cell.organelles.centriole.hasAsters = true
+
+        const { centriole } = enterMetaphase(cell)
+
+        expect(centriole.astersHaveSpreadAcrossCell).toEqual(true)
       })
     })
 
