@@ -1,3 +1,14 @@
+::2022-10-14::
+o didn't handle the 'paired' aspect of metaphase test (iii.B)
+
+also dont't really discuss/model the mechanism by which these are paired; without the logic; how do we know how it breaks?
+
+discovered a way to take a picture of a page an then import that text so we don't need to have the book with us to do the model; just snap a picture and export the text
+
+took 1... 1.5 hours to write test 3.c.iii.C--- oh my loooooord
+
+part of the problem here is writing code that based off of the way the process is percieved. if a programmer were interpresting the body they might see it different. that's to say, the raw data that we are given (the text and the images) has itself been scrubbed and organized in a way that necessarily impact the way we model-- which will make coming up with a new/novel way to model challenging
+
 ::2022-10-13::
 not particularly pleased with how we handled today's test but we are glad that we did something.
 don't like that it's descriptive rather than quantitative
