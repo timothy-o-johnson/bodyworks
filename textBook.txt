@@ -1,0 +1,14 @@
+
+p. 7
+The ability to reproduce their kind is a characteristic of living things. Cells reproduce in a process of duplication and division called mitosis. In the proverbial nutshell, nuclear chromatin (a diffuse network of DNA and related protein), once duplicated, transforms into 46 chromosomes, which divide into paired sub units (92 chromatids); those chromatids separate and move into opposite ends of the dividing cell, forming the 46 chromosomes of each of the newly formed daughter cells. For clarity, we show only four pairs of chromatids and chromosomes.
+
+Interphase: the phase between successive divisions; the longest period of the reproductive cycle. Duplication of DNA (in chromatin) occurs during this phase. The dispersed chromatin (D*) is a network of fine fibrils, not visible as discrete entities in the nucleoplasm. The nucleus and nucleolus are intact. The paired centrioles divide in the centrosome.
+
+Prophase: the dispersed chromatin (D*) thickens, shortens, and coils to form condensed chromatin chromosomes (D¹*). Each chromosome consists of two chromatids (E and F) connected by a centromere (G). Each chromatid has the equivalent amount of DNA of a chromosome. In prophase, the nuclear membrane and nucleolus break up/dissolve. The centrioles separate and migrate to opposite poles of the cell where they project microtubules (spindle fibers) called asters. Kinetochores (G¹) form on the centromeres.
+
+Metaphase: strands of microtubules develop across the cell center from paired centrioles. The chromatids attach to the spindle fibers at the centromere and line up in the center of the cell, half (46 chromatids) on one side, half on the other.
+
+Anaphase: activated daughter centromeres (G¹; kinetochores), each attached to one chromatid, move to the ipsilateral pole of the cell along the spindle fiber, taking their chromatids with them. The separated chromatids constitute chromosomes. Anaphase ends when the daughter chromosomes arrive at their respective poles (46 on each side).
+
+Telophase: the cell pinches off in the center, forming two daughter cells, each identical to the mother cell (assuming no mutations). The cytoplasm and organelles, having duplicated earlier, are seg regated into their respective newly forming cells. As the nucleus is reconstituted, and the nuclear membrane and nucleolus reappear in each new cell, the chromosomes fade into dispersed chromatin, and the centromere disappears. Complete cleavage of the parent cell into daughter cells, each with identical cellular content, termi nates the mitotic process. Each daughter cell enters interphase to start the process anew.
+ale 1
