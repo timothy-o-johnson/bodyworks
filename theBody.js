@@ -50,15 +50,19 @@ const body = {
           cellAfterProphase
         )
 
-        cellAfterProphase = addKinetochoresToCentromeres (cellAfterProphase)
+        cellAfterProphase = addKinetochoresToCentromeres(cellAfterProphase)
 
         return cellAfterProphase
 
         function addChromosomes (cell, chromosomeCount) {
           let chromosomes = (cellAfterProphase.organelles.chromosomes = [])
           const chromosomeObj = {
-            centromeres: { count: 1, kinetochores: 0 },
-            chromatids: 2
+            centromeres: {
+              count: 1,
+              attachedToSpindleFiber: false,
+              kinetochores: 0
+            },
+            chromatids: { count: 2 }
           }
 
           for (let i = 0; i < chromosomeCount; i++) {
@@ -93,17 +97,23 @@ const body = {
         }
       }
 
-      function enterMetaphase(cell){
+      function enterMetaphase (cell) {
         let cellAfterMetaphase = JSON.parse(JSON.stringify(cell))
 
         let centriole = cellAfterMetaphase.organelles.centriole
+        let chromosomes = cellAfterMetaphase.organelles.chromosomes
 
-        if(centriole.hasAsters){
+        if (centriole.hasAsters) {
           centriole.astersHaveSpreadAcrossCell = true
         }
 
-        
-        return {centriole}
+        if(chromosomes){
+          chromosomes.forEach(chromosome =>{
+            chromosome.centromeres.attachedToSpindleFiber = true
+          })
+        }
+
+        return { centriole, cellAfterMetaphase, chromosomes }
       }
     },
     createCell: organelles => {

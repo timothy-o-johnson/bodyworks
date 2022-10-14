@@ -3,6 +3,8 @@ const theBody = require('../../theBody').body
 const organelles = theBody.generalizedCell.organelles
 const newCell = theBody.processes.createCell(organelles)
 
+console.log(newCell)
+
 describe('0. The Body ', () => {
   it('should be defined', () => {
     expect(theBody).toBeDefined()
@@ -391,10 +393,17 @@ describe('3. Processes', () => {
 
       it('C. should ensure each chromosome is composed of two chromatids connected by a centromere', () => {
         const cellAfterProphase = enterProphase(cell)
+
+        console.log(JSON.stringify(cellAfterProphase, '', ''))
+
         const chromosomes = cellAfterProphase.organelles.chromosomes
         const chromosomeObj = {
-          centromeres: { count: 1, kinetochores: expect.anything() },
-          chromatids: 2
+          centromeres: {
+            count: 1,
+            attachedToSpindleFiber: false,
+            kinetochores: expect.anything()
+          },
+          chromatids: { count: 2 }
         }
 
         expect(Array.isArray(chromosomes)).toBe(true)
@@ -436,8 +445,25 @@ describe('3. Processes', () => {
     })
 
     describe('iii. enterMetaphase()...', () => {
-
       const enterMetaphase = processes.cellDivisionMitosis().enterMetaphase
+      cell.organelles.chromosomes = [
+        {
+          centromeres: {
+            count: 1,
+            attachedToSpindleFiber: false,
+            kinetochores: 1
+          },
+          chromatids: { count: 2 }
+        },
+        {
+          centromeres: {
+            count: 1,
+            attachedToSpindleFiber: false,
+            kinetochores: 1
+          },
+          chromatids: { count: 2 }
+        }
+      ]
 
       it('A. should be defined', () => {
         expect(enterMetaphase).toBeDefined()
@@ -451,6 +477,25 @@ describe('3. Processes', () => {
 
         expect(centriole.astersHaveSpreadAcrossCell).toEqual(true)
       })
+
+      it.todo('handle the paired aspect of "paired centrioles"')
+
+      it('C. should attach chromatids to spindle fibers at centromere', () => {
+        const { chromosomes, cellAfterMetaphase } = enterMetaphase(cell)
+
+        console.log(JSON.stringify(cellAfterMetaphase, '', ' '))
+
+        chromosomes.forEach(chromosome => {
+          const isChromatidAttachedToSpindleFiber =
+            chromosome.centromeres.attachedToSpindleFiber
+
+          expect(isChromatidAttachedToSpindleFiber).toBe(true)
+        })
+      })
+
+      it.todo(
+        'D. should align chromatids in the center of the cell with half (46 chromatids) on one side and half on the other'
+      )
     })
 
     function doCellDivision (cell) {
