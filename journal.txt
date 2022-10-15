@@ -1,5 +1,15 @@
+::2022-10-15::
+oy! today i handled the 'paired' description of centrioles
+took some research learned what S phase was and how they split
+https://en.wikipedia.org/wiki/Centrosome_cycle
+
+understanding how objects worked helped in creating daughter centrioles
+o should i add centrosome?
+
+next time: 3.iii.D
+
 ::2022-10-14::
-o didn't handle the 'paired' aspect of metaphase test (iii.B)
+X didn't handle the 'paired' aspect of metaphase test (iii.B)
 
 also dont't really discuss/model the mechanism by which these are paired; without the logic; how do we know how it breaks?
 
