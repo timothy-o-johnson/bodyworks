@@ -3,7 +3,7 @@ const theBody = require('../../theBody').body
 const organelles = theBody.generalizedCell.organelles
 const newCell = theBody.processes.createCell(organelles)
 
-console.log(newCell)
+// console.log(newCell)
 
 describe('0. The Body ', () => {
   it('should be defined', () => {
@@ -221,7 +221,7 @@ describe('2. Cells & Tissues (p. 6)', () => {
         'mitochrondrion',
         'vacuole',
         'lysosome',
-        'centriole',
+        'centrioles',
         'microtubule',
         'microfilament'
       ]
@@ -285,7 +285,7 @@ describe('3. Processes', () => {
       })
     })
 
-    it(`ii. should create a cell object from the generalized cell's organelles`, () => {
+    it(`iii. should create a cell object from the generalized cell's organelles`, () => {
       const cell = processes.createCell(organelles)
 
       // console.log(JSON.stringify(cell, '', ' '))
@@ -305,12 +305,30 @@ describe('3. Processes', () => {
 
         organelles.forEach(organelle => {
           if (typeof organelle === 'string') {
-            if (organelle === 'centriole') {
-              expectedOrganelles[organelle] = {
-                count: 2,
-                hasAsters: false,
-                astersHaveSpreadAcrossCell: false
-              }
+            if (organelle === 'centrioles') {
+              const motherId = expect.anything()
+              const daughterId = expect.anything()
+
+              expectedOrganelles[organelle] = [
+                {
+                  id: motherId,
+                  isMother: true,
+                  isDaughter: false,
+                  daughterId: daughterId,
+                  motherId: null,
+                  hasAsters: false,
+                  astersHaveSpreadAcrossCell: false
+                },
+                {
+                  id: daughterId,
+                  isMother: false,
+                  isDaughter: true,
+                  daughterId: null,
+                  motherId: motherId,
+                  hasAsters: false,
+                  astersHaveSpreadAcrossCell: false
+                }
+              ]
             } else {
               expectedOrganelles[organelle] = {
                 count: 1
@@ -368,9 +386,24 @@ describe('3. Processes', () => {
       it('C. should divide paired centrioles in centrosome', () => {
         const enterInterphase = processes.cellDivisionMitosis().enterInterphase
         const { cellAfterInterphase } = enterInterphase(cell)
-        const centrioleCount = cellAfterInterphase.organelles.centriole.count
+        const centrioleCount = cellAfterInterphase.organelles.centrioles.length
+        const centrioles = cellAfterInterphase.organelles.centrioles
+        let areCentriolesUniqueObj = { areUnique: true }
 
-        expect(centrioleCount).toEqual(2 * cell.organelles.centriole.count)
+        expect(centrioleCount).toEqual(2 * cell.organelles.centrioles.length)
+
+        centrioles.forEach(centriole => {
+          const centrioleId = centriole.id
+          console.log({ centrioleId })
+
+          if (!areCentriolesUniqueObj[centrioleId]) {
+            areCentriolesUniqueObj[centrioleId] = true
+          } else {
+            areCentriolesUniqueObj.areUnique = false
+          }
+        })
+
+        expect(areCentriolesUniqueObj.areUnique).toBe(true)
       })
     })
 
@@ -394,7 +427,7 @@ describe('3. Processes', () => {
       it('C. should ensure each chromosome is composed of two chromatids connected by a centromere', () => {
         const cellAfterProphase = enterProphase(cell)
 
-        console.log(JSON.stringify(cellAfterProphase, '', ''))
+        console.log(JSON.stringify(cellAfterProphase, '', ' '))
 
         const chromosomes = cellAfterProphase.organelles.chromosomes
         const chromosomeObj = {
@@ -427,9 +460,9 @@ describe('3. Processes', () => {
 
       it('F. should separate centrioles and move them to the opposite poles of the cell where they project microtubules (spindle fibers) called asters', () => {
         const cellAfterProphase = enterProphase(cell)
-        const { centriole } = cellAfterProphase.organelles
+        const { centrioles } = cellAfterProphase.organelles
 
-        expect(centriole.hasAsters).toBe(true)
+        expect(centrioles.hasAsters).toBe(true)
       })
 
       it('G. should form kinetochores on the centromeres', () => {
@@ -471,14 +504,18 @@ describe('3. Processes', () => {
 
       it('B. should develop strands of microtubes across the cell center from paired centrioles', () => {
         let cell = JSON.parse(JSON.stringify(newCell))
-        cell.organelles.centriole.hasAsters = true
+        let cellCentrioles = cell.organelles.centrioles
 
-        const { centriole } = enterMetaphase(cell)
+        cellCentrioles.forEach(centriole => {
+          centriole.hasAsters = true
+        })
 
-        expect(centriole.astersHaveSpreadAcrossCell).toEqual(true)
+        const { centrioles } = enterMetaphase(cell)
+
+        centrioles.forEach(centriole => {
+          expect(centriole.astersHaveSpreadAcrossCell).toEqual(true)
+        })
       })
-
-      it.todo('handle the paired aspect of "paired centrioles"')
 
       it('C. should attach chromatids to spindle fibers at centromere', () => {
         const { chromosomes, cellAfterMetaphase } = enterMetaphase(cell)

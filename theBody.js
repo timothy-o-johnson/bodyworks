@@ -13,7 +13,7 @@ const body = {
       'mitochrondrion',
       'vacuole',
       'lysosome',
-      'centriole',
+      'centrioles',
       'microtubule',
       'microfilament'
     ]
@@ -25,9 +25,60 @@ const body = {
 
       function enterInterphase (cell) {
         let cellAfterInterphase = JSON.parse(JSON.stringify(cell))
+        let centrioles = cellAfterInterphase.organelles.centrioles
+        let centriolesCopy = [...centrioles]
 
         cellAfterInterphase.organelles.chromatin.count *= 2
-        cellAfterInterphase.organelles.centriole.count *= 2
+        // cellAfterInterphase.organelles.centrioles.count *= 2
+
+        // centriolExample =  {
+        //   id: motherId,
+        //   isMother: true,
+        //   isDaughter: false,
+        //   daughterId: daughterId,
+        //   motherId: null,
+        //   hasAsters: false,
+        //   astersHaveSpreadAcrossCell: false
+        // }
+
+        centriolesCopy.forEach(centriole => {
+          // create daughter centriole
+          let daughterCentriole = { ...centriole }
+          let motherId
+          let daughterId // = setTimeout(()=>{parseInt(Date.now())},1)
+
+          if (centriole.isDaughter) {
+            motherId = 3
+            daughterId = 4
+
+            // update id
+            centriole.id = motherId
+
+            // convert to mother
+            centriole.isMother = true
+            centriole.isDaughter = false
+            centriole.motherId = null
+            centriole.daughterId = daughterId
+
+            // update daughter centriole
+            daughterCentriole.id = daughterId
+            daughterCentriole.isMother = false
+            daughterCentriole.isDaughter = true
+            daughterCentriole.motherId = motherId
+            daughterCentriole.daughterId = null
+          } else if (centriole.isMother) {
+            motherId = centriole.id
+            daughterId = motherId + 1
+            // update daughter centriole
+            daughterCentriole.id = daughterId
+            daughterCentriole.isMother = false
+            daughterCentriole.isDaughter = true
+            daughterCentriole.motherId = motherId
+            daughterCentriole.daughterId = null
+          }
+
+          centrioles.push(daughterCentriole)
+        })
 
         return { cell, cellAfterInterphase }
       }
@@ -91,7 +142,7 @@ const body = {
         }
 
         function separateCentriolesAndProjectAsters (cell) {
-          cell.organelles.centriole.hasAsters = true
+          cell.organelles.centrioles.hasAsters = true
 
           return cell
         }
@@ -100,20 +151,22 @@ const body = {
       function enterMetaphase (cell) {
         let cellAfterMetaphase = JSON.parse(JSON.stringify(cell))
 
-        let centriole = cellAfterMetaphase.organelles.centriole
+        let centrioles = cellAfterMetaphase.organelles.centrioles
         let chromosomes = cellAfterMetaphase.organelles.chromosomes
 
-        if (centriole.hasAsters) {
-          centriole.astersHaveSpreadAcrossCell = true
-        }
+        centrioles.forEach(centriole => {
+          if (centriole.hasAsters) {
+            centriole.astersHaveSpreadAcrossCell = true
+          }
+        })
 
-        if(chromosomes){
-          chromosomes.forEach(chromosome =>{
+        if (chromosomes) {
+          chromosomes.forEach(chromosome => {
             chromosome.centromeres.attachedToSpindleFiber = true
           })
         }
 
-        return { centriole, cellAfterMetaphase, chromosomes }
+        return { centrioles, cellAfterMetaphase, chromosomes }
       }
     },
     createCell: organelles => {
@@ -130,12 +183,30 @@ const body = {
           // if organelle is a string,
           // make each organelle an object and add count property
           if (typeof organelle === 'string') {
-            if (organelle === 'centriole') {
-              cellWithOrganelles['organelles'][organelle] = {
-                count: 2,
-                hasAsters: false,
-                astersHaveSpreadAcrossCell: false
-              }
+            if (organelle === 'centrioles') {
+              const motherId = 1
+              const daughterId = motherId + 1
+
+              cellWithOrganelles['organelles'][organelle] = [
+                {
+                  id: motherId,
+                  isMother: true,
+                  isDaughter: false,
+                  daughterId: daughterId,
+                  motherId: null,
+                  hasAsters: false,
+                  astersHaveSpreadAcrossCell: false
+                },
+                {
+                  id: daughterId,
+                  isMother: false,
+                  isDaughter: true,
+                  daughterId: null,
+                  motherId: motherId,
+                  hasAsters: false,
+                  astersHaveSpreadAcrossCell: false
+                }
+              ]
             } else {
               cellWithOrganelles['organelles'][organelle] = {
                 count: 1
