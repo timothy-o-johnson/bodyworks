@@ -25,62 +25,80 @@ const body = {
 
       function enterInterphase (cell) {
         let cellAfterInterphase = JSON.parse(JSON.stringify(cell))
-        let centrioles = cellAfterInterphase.organelles.centrioles
-        let centriolesCopy = [...centrioles]
 
         cellAfterInterphase.organelles.chromatin.count *= 2
-        // cellAfterInterphase.organelles.centrioles.count *= 2
-
-        // centriolExample =  {
-        //   id: motherId,
-        //   isMother: true,
-        //   isDaughter: false,
-        //   daughterId: daughterId,
-        //   motherId: null,
-        //   hasAsters: false,
-        //   astersHaveSpreadAcrossCell: false
-        // }
-
-        centriolesCopy.forEach(centriole => {
-          // create daughter centriole
-          let daughterCentriole = { ...centriole }
-          let motherId
-          let daughterId // = setTimeout(()=>{parseInt(Date.now())},1)
-
-          if (centriole.isDaughter) {
-            motherId = 3
-            daughterId = 4
-
-            // update id
-            centriole.id = motherId
-
-            // convert to mother
-            centriole.isMother = true
-            centriole.isDaughter = false
-            centriole.motherId = null
-            centriole.daughterId = daughterId
-
-            // update daughter centriole
-            daughterCentriole.id = daughterId
-            daughterCentriole.isMother = false
-            daughterCentriole.isDaughter = true
-            daughterCentriole.motherId = motherId
-            daughterCentriole.daughterId = null
-          } else if (centriole.isMother) {
-            motherId = centriole.id
-            daughterId = motherId + 1
-            // update daughter centriole
-            daughterCentriole.id = daughterId
-            daughterCentriole.isMother = false
-            daughterCentriole.isDaughter = true
-            daughterCentriole.motherId = motherId
-            daughterCentriole.daughterId = null
-          }
-
-          centrioles.push(daughterCentriole)
-        })
+        cellAfterInterphase = dividePairedCentrioles(cellAfterInterphase)
 
         return { cell, cellAfterInterphase }
+
+        function dividePairedCentrioles (cellAfterInterphase) {
+          let centrioles = cellAfterInterphase.organelles.centrioles
+          let centriolesCopy = [...centrioles]
+
+          // centriolExample =  {
+          //   id: motherId,
+          //   isMother: true,
+          //   isDaughter: false,
+          //   daughterId: daughterId,
+          //   motherId: null,
+          //   hasAsters: false,
+          //   astersHaveSpreadAcrossCell: false
+          // }
+
+          centriolesCopy.forEach(centriole => {
+            // create daughter centriole
+            let daughterCentriole = { ...centriole }
+            let motherId
+            let daughterId
+
+            if (centriole.isDaughter) {
+              motherId = 3
+              daughterId = 4
+
+              // update id
+              centriole.id = motherId
+
+              // convert to mother
+              centriole.isMother = true
+              centriole.isDaughter = false
+              centriole.motherId = null
+              centriole.daughterId = daughterId
+
+              daughterCentriole = updateDaughterCentriole(
+                daughterCentriole,
+                daughterId,
+                motherId
+              )
+            } else if (centriole.isMother) {
+              motherId = centriole.id
+              daughterId = motherId + 1
+
+              daughterCentriole = updateDaughterCentriole(
+                daughterCentriole,
+                daughterId,
+                motherId
+              )
+            }
+
+            centrioles.push(daughterCentriole)
+          })
+
+          return cellAfterInterphase
+        }
+
+        function updateDaughterCentriole (
+          daughterCentriole,
+          daughterId,
+          motherId
+        ) {
+          daughterCentriole.id = daughterId
+          daughterCentriole.isMother = false
+          daughterCentriole.isDaughter = true
+          daughterCentriole.motherId = motherId
+          daughterCentriole.daughterId = null
+
+          return daughterCentriole
+        }
       }
 
       function enterProphase (cell) {
