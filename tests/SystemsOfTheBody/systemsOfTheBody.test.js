@@ -364,6 +364,10 @@ describe('3. Processes', () => {
   describe('c. cellDivisionMitosis()... (p. 7)', () => {
     const cell = JSON.parse(JSON.stringify(newCell))
 
+    const enterInterphase = processes.cellDivisionMitosis().enterInterphase
+    const enterProphase = processes.cellDivisionMitosis().enterProphase
+    const enterMetaphase = processes.cellDivisionMitosis().enterMetaphase
+
     it('i. should be defined', () => {
       expect(processes.cellDivisionMitosis).toBeDefined()
     })
@@ -394,7 +398,6 @@ describe('3. Processes', () => {
 
         centrioles.forEach(centriole => {
           const centrioleId = centriole.id
-          console.log({ centrioleId })
 
           if (!areCentriolesUniqueObj[centrioleId]) {
             areCentriolesUniqueObj[centrioleId] = true
@@ -415,7 +418,7 @@ describe('3. Processes', () => {
       })
 
       it('B. should thicken, shorten, and coil dispersed chromatin to form condensed chromatin chromosomes', () => {
-        const expectedChromosomeCount = 2
+        const expectedChromosomeCount = 46
 
         const cellAfterProphase = enterProphase(cell)
 
@@ -436,7 +439,12 @@ describe('3. Processes', () => {
             attachedToSpindleFiber: false,
             kinetochores: expect.anything()
           },
-          chromatids: { count: 2 }
+          chromatids: {
+            cellAlignment: null,
+            count: 2,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
         }
 
         expect(Array.isArray(chromosomes)).toBe(true)
@@ -478,7 +486,7 @@ describe('3. Processes', () => {
     })
 
     describe('iii. enterMetaphase()...', () => {
-      const enterMetaphase = processes.cellDivisionMitosis().enterMetaphase
+      // const enterMetaphase = processes.cellDivisionMitosis().enterMetaphase
       cell.organelles.chromosomes = [
         {
           centromeres: {
@@ -530,9 +538,51 @@ describe('3. Processes', () => {
         })
       })
 
-      it.todo(
-        'D. should align chromatids in the center of the cell with half (46 chromatids) on one side and half on the other'
-      )
+      it('D. should align chromatids in the center of the cell with half (46 chromatids) on one side and half on the other', () => {
+        // const enterMetaphase = processes.cellDivisionMitosis().enterMetaphase
+
+        let cell = getCellAfterProphase(newCell)
+
+        const initialChromosomes = cell.organelles.chromosomes
+
+        const totalChromatids = initialChromosomes.reduce(
+          (prevValue, currValue) => prevValue + currValue.chromatids.count,
+          0
+        )
+
+        console.log({ totalChromatids })
+
+        const {
+          chromatidsOnLeftside,
+          chromatidsOnRightside,
+          chromosomes
+        } = enterMetaphase(cell)
+
+        chromosomes.forEach(chromosome => {
+          expect(chromosome.chromatids.cellAlignment).toBe('center')
+        })
+
+        expect(chromatidsOnLeftside).toEqual(totalChromatids / 2)
+        expect(chromatidsOnRightside).toEqual(totalChromatids / 2)
+
+        expect(chromatidsOnLeftside).toEqual(46)
+        expect(chromatidsOnRightside).toEqual(46)
+      })
+
+      return 
+
+      function getCellAfterProphase (newCell) {
+        // const enterInterphase = processes.cellDivisionMitosis().enterInterphase
+        // const enterProphase = processes.cellDivisionMitosis().enterProphase
+
+        let initialCell = JSON.parse(JSON.stringify(newCell))
+
+        let cellAfterInterphase = enterInterphase(initialCell)
+          .cellAfterInterphase
+        let cellAfterProphase = enterProphase(cellAfterInterphase)
+
+        return cellAfterProphase
+      }
     })
 
     function doCellDivision (cell) {

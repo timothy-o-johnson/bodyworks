@@ -105,7 +105,7 @@ const body = {
         let cellAfterProphase = JSON.parse(JSON.stringify(cell))
 
         const cellHasChromatin = cell.organelles.chromatin.count
-        const chromosomeCount = 2
+        const chromosomeCount = 46
 
         if (cellHasChromatin) {
           cellAfterProphase = addChromosomes(cellAfterProphase, chromosomeCount)
@@ -131,7 +131,12 @@ const body = {
               attachedToSpindleFiber: false,
               kinetochores: 0
             },
-            chromatids: { count: 2 }
+            chromatids: {
+              cellAlignment: null,
+              count: 2,
+              leftSideCount: 0,
+              rightSideCount: 0
+            }
           }
 
           for (let i = 0; i < chromosomeCount; i++) {
@@ -171,6 +176,8 @@ const body = {
 
         let centrioles = cellAfterMetaphase.organelles.centrioles
         let chromosomes = cellAfterMetaphase.organelles.chromosomes
+        let chromatidsOnLeftside = 0,
+          chromatidsOnRightside = 0
 
         centrioles.forEach(centriole => {
           if (centriole.hasAsters) {
@@ -180,11 +187,28 @@ const body = {
 
         if (chromosomes) {
           chromosomes.forEach(chromosome => {
+            const chromatidCount = chromosome.chromatids.count
+            let leftSideChromatidCount = chromosome.chromatids.leftSideCount
+            let rightSideChromatidCount = chromosome.chromatids.rightSideCount
+
             chromosome.centromeres.attachedToSpindleFiber = true
+            chromosome.chromatids.cellAlignment = 'center'
+
+            leftSideChromatidCount = chromatidCount / 2
+            rightSideChromatidCount = chromatidCount / 2
+
+            chromatidsOnLeftside += leftSideChromatidCount
+            chromatidsOnRightside += rightSideChromatidCount
           })
         }
 
-        return { centrioles, cellAfterMetaphase, chromosomes }
+        return {
+          centrioles,
+          cellAfterMetaphase,
+          chromatidsOnLeftside,
+          chromatidsOnRightside,
+          chromosomes
+        }
       }
     },
     createCell: organelles => {
@@ -225,6 +249,10 @@ const body = {
                   astersHaveSpreadAcrossCell: false
                 }
               ]
+            } else if (organelle === 'chromatin') {
+              cellWithOrganelles['organelles'][organelle] = {
+                count: 1
+              }
             } else {
               cellWithOrganelles['organelles'][organelle] = {
                 count: 1
