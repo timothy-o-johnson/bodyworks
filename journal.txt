@@ -1,3 +1,12 @@
+::2022-10-22::
+finished modeling metaphase -- with proper chromosome count
+code is still big and messy
+looking forward to cleaning up and being able to see intricacies of cell visually
+
+::2022-10-20::
+learned how to use the reduce method
+prepped 
+
 ::2022-10-15::
 oy! today i handled the 'paired' description of centrioles
 took some research learned what S phase was and how they split
