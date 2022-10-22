@@ -374,11 +374,10 @@ describe('3. Processes', () => {
 
     describe('  i. enterInterphase()...', () => {
       it('A. should be defined', () => {
-        expect(processes.cellDivisionMitosis().enterInterphase).toBeDefined()
+        expect(enterInterphase).toBeDefined()
       })
 
       it('B. should duplicate DNA (in chromatin)', () => {
-        const enterInterphase = processes.cellDivisionMitosis().enterInterphase
 
         const { cellAfterInterphase } = enterInterphase(cell)
 
@@ -388,7 +387,6 @@ describe('3. Processes', () => {
       })
 
       it('C. should divide paired centrioles in centrosome', () => {
-        const enterInterphase = processes.cellDivisionMitosis().enterInterphase
         const { cellAfterInterphase } = enterInterphase(cell)
         const centrioleCount = cellAfterInterphase.organelles.centrioles.length
         const centrioles = cellAfterInterphase.organelles.centrioles
@@ -411,8 +409,6 @@ describe('3. Processes', () => {
     })
 
     describe(' ii. enterProphase()...', () => {
-      const enterProphase = processes.cellDivisionMitosis().enterProphase
-
       it('A. should be defined', () => {
         expect(enterProphase).toBeDefined()
       })
@@ -486,7 +482,6 @@ describe('3. Processes', () => {
     })
 
     describe('iii. enterMetaphase()...', () => {
-      // const enterMetaphase = processes.cellDivisionMitosis().enterMetaphase
       cell.organelles.chromosomes = [
         {
           centromeres: {
@@ -539,7 +534,6 @@ describe('3. Processes', () => {
       })
 
       it('D. should align chromatids in the center of the cell with half (46 chromatids) on one side and half on the other', () => {
-        // const enterMetaphase = processes.cellDivisionMitosis().enterMetaphase
 
         let cell = getCellAfterProphase(newCell)
 
@@ -550,7 +544,7 @@ describe('3. Processes', () => {
           0
         )
 
-        console.log({ totalChromatids })
+        expect(totalChromatids).toEqual(92)
 
         const {
           chromatidsOnLeftside,
@@ -572,8 +566,6 @@ describe('3. Processes', () => {
       return 
 
       function getCellAfterProphase (newCell) {
-        // const enterInterphase = processes.cellDivisionMitosis().enterInterphase
-        // const enterProphase = processes.cellDivisionMitosis().enterProphase
 
         let initialCell = JSON.parse(JSON.stringify(newCell))
 
