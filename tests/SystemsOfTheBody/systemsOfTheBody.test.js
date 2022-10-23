@@ -3,8 +3,6 @@ const theBody = require('../../theBody').body
 const organelles = theBody.generalizedCell.organelles
 const newCell = theBody.processes.createCell(organelles)
 
-// console.log(newCell)
-
 describe('0. The Body ', () => {
   it('should be defined', () => {
     expect(theBody).toBeDefined()
@@ -367,12 +365,13 @@ describe('3. Processes', () => {
     const enterInterphase = processes.cellDivisionMitosis().enterInterphase
     const enterProphase = processes.cellDivisionMitosis().enterProphase
     const enterMetaphase = processes.cellDivisionMitosis().enterMetaphase
+    const enterAnaphase = processes.cellDivisionMitosis().enterAnaphase
 
     it('i. should be defined', () => {
       expect(processes.cellDivisionMitosis).toBeDefined()
     })
 
-    describe('  i. enterInterphase()...', () => {
+    describe(' ii. enterInterphase()...', () => {
       it('A. should be defined', () => {
         expect(enterInterphase).toBeDefined()
       })
@@ -408,7 +407,7 @@ describe('3. Processes', () => {
       })
     })
 
-    describe(' ii. enterProphase()...', () => {
+    describe('iii. enterProphase()...', () => {
       it('A. should be defined', () => {
         expect(enterProphase).toBeDefined()
       })
@@ -481,7 +480,7 @@ describe('3. Processes', () => {
       it.todo('add chromosomes to list of standard cell properties')
     })
 
-    describe('iii. enterMetaphase()...', () => {
+    describe(' iv. enterMetaphase()...', () => {
       cell.organelles.chromosomes = [
         {
           centromeres: {
@@ -575,6 +574,12 @@ describe('3. Processes', () => {
 
         return cellAfterProphase
       }
+    })
+
+    describe('  v. enterAnaphase()...', ()=>{
+      it('should be defined', ()=>{
+        expect(enterAnaphase).toBeDefined()
+      })
     })
 
     function doCellDivision (cell) {

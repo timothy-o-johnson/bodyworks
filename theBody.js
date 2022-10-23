@@ -21,7 +21,11 @@ const body = {
 
   processes: {
     cellDivisionMitosis: () => {
-      return { enterInterphase, enterMetaphase, enterProphase }
+      return { enterAnaphase, enterInterphase, enterMetaphase, enterProphase }
+
+      function enterAnaphase(cell){
+
+      }
 
       function enterInterphase (cell) {
         let cellAfterInterphase = JSON.parse(JSON.stringify(cell))
