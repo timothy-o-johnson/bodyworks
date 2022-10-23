@@ -377,7 +377,6 @@ describe('3. Processes', () => {
       })
 
       it('B. should duplicate DNA (in chromatin)', () => {
-
         const { cellAfterInterphase } = enterInterphase(cell)
 
         const chromatinCount = cellAfterInterphase.organelles.chromatin.count
@@ -425,7 +424,7 @@ describe('3. Processes', () => {
       it('C. should ensure each chromosome is composed of two chromatids connected by a centromere', () => {
         const cellAfterProphase = enterProphase(cell)
 
-        console.log(JSON.stringify(cellAfterProphase, '', ' '))
+        // console.log(JSON.stringify(cellAfterProphase, '', ' '))
 
         const chromosomes = cellAfterProphase.organelles.chromosomes
         const chromosomeObj = {
@@ -465,15 +464,24 @@ describe('3. Processes', () => {
         const cellAfterProphase = enterProphase(cell)
         const { centrioles } = cellAfterProphase.organelles
 
-        expect(centrioles.hasAsters).toBe(true)
+        console.log({centrioles});
+        
+        centrioles.forEach(centriole =>{
+          expect(centriole.hasAsters).toBe(true)
+          expect(centriole.astersHaveSpreadAcrossCell).toBe(true)
+
+        })
+
+       
       })
 
       it('G. should form kinetochores on the centromeres', () => {
         const cellAfterProphase = enterProphase(cell)
         const { chromosomes } = cellAfterProphase.organelles
+        const kinetochoreCount = 2
 
         chromosomes.forEach(chromosome => {
-          expect(chromosome.centromeres.kinetochores).toBeGreaterThan(0)
+          expect(chromosome.centromeres.kinetochores).toEqual(kinetochoreCount)
         })
       })
 
@@ -522,7 +530,7 @@ describe('3. Processes', () => {
       it('C. should attach chromatids to spindle fibers at centromere', () => {
         const { chromosomes, cellAfterMetaphase } = enterMetaphase(cell)
 
-        console.log(JSON.stringify(cellAfterMetaphase, '', ' '))
+        // console.log(JSON.stringify(cellAfterMetaphase, '', ' '))
 
         chromosomes.forEach(chromosome => {
           const isChromatidAttachedToSpindleFiber =
@@ -533,7 +541,6 @@ describe('3. Processes', () => {
       })
 
       it('D. should align chromatids in the center of the cell with half (46 chromatids) on one side and half on the other', () => {
-
         let cell = getCellAfterProphase(newCell)
 
         const initialChromosomes = cell.organelles.chromosomes
@@ -546,10 +553,13 @@ describe('3. Processes', () => {
         expect(totalChromatids).toEqual(92)
 
         const {
+          cellAfterMetaphase,
           chromatidsOnLeftside,
           chromatidsOnRightside,
           chromosomes
         } = enterMetaphase(cell)
+
+        // console.log(JSON.stringify(cellAfterMetaphase, '', ' '))
 
         chromosomes.forEach(chromosome => {
           expect(chromosome.chromatids.cellAlignment).toBe('center')
@@ -562,36 +572,45 @@ describe('3. Processes', () => {
         expect(chromatidsOnRightside).toEqual(46)
       })
 
-      return 
-
-      function getCellAfterProphase (newCell) {
-
-        let initialCell = JSON.parse(JSON.stringify(newCell))
-
-        let cellAfterInterphase = enterInterphase(initialCell)
-          .cellAfterInterphase
-        let cellAfterProphase = enterProphase(cellAfterInterphase)
-
-        return cellAfterProphase
-      }
+      return
     })
 
-    describe('  v. enterAnaphase()...', ()=>{
-      it('should be defined', ()=>{
+    describe('  v. enterAnaphase()...', () => {
+      it('A. should be defined', () => {
         expect(enterAnaphase).toBeDefined()
       })
+
+      it('B. chromatids separate to become chromosomes and move to the ipsilateral pole of the cell along the spindle fiber.', () => {
+        const cellAfterMetaphase = getCellAfterMetaphase(cell)
+
+        const cellKeys = Object.keys(cellAfterMetaphase)
+
+        const { cellAfterAnaphase } = enterAnaphase(cellAfterMetaphase)
+
+
+        const chromosomeCount = cellAfterAnaphase.organelles.chromosomes.length
+
+        expect(chromosomeCount).toEqual(92)
+      })
+
+      it.todo('centriole.containChromosomes')
     })
 
-    function doCellDivision (cell) {
-      let daughterCells = []
+    function getCellAfterProphase (newCell) {
+      let initialCell = JSON.parse(JSON.stringify(newCell))
 
-      cell = interphase(cell)
-      cell = prophase(cell)
-      cell = metaphase(cell)
-      cell = anaphase(cell)
-      daughterCells = telophase(cell)
+      let cellAfterInterphase = enterInterphase(initialCell).cellAfterInterphase
+      let cellAfterProphase = enterProphase(cellAfterInterphase)
 
-      return daughterCells
+      return cellAfterProphase
+    }
+
+    function getCellAfterMetaphase (newCell) {
+      let cellAfterProphase = getCellAfterProphase(newCell)
+      let cellAfterMetaphase = enterMetaphase(cellAfterProphase)
+        .cellAfterMetaphase
+
+      return cellAfterMetaphase
     }
   })
 })

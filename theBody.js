@@ -21,10 +21,88 @@ const body = {
 
   processes: {
     cellDivisionMitosis: () => {
+      // let daughterCells = []
+
+      // cell = interphase(cell)
+      // cell = prophase(cell)
+      // cell = metaphase(cell)
+      // cell = anaphase(cell)
+      // daughterCells = telophase(cell)
+
+      // return daughterCells
+
       return { enterAnaphase, enterInterphase, enterMetaphase, enterProphase }
 
-      function enterAnaphase(cell){
+      function enterAnaphase (cell) {
+        let cellAfterAnaphase = JSON.parse(JSON.stringify(cell))
+        let originalChromosomes = cellAfterAnaphase.organelles.chromosomes
+        const hasSpindleFibers = cellAfterAnaphase.organelles.centrioles[0].hasAsters
 
+        if (hasSpindleFibers) {
+          let newChromosomes = separateChromatidsToBecomeChromosomes(
+            originalChromosomes
+          )
+
+          cellAfterAnaphase.organelles.chromosomes = newChromosomes
+        }
+
+        return { cellAfterAnaphase }
+
+        function separateChromatidsToBecomeChromosomes (chromosomes = []) {
+          let newChromosomes = []
+          let tempChromosome = {}
+          let cellAlignment = null
+
+          chromosomes.forEach(chromosome => {
+            //  let chromosomeEx = {
+            //     "centromeres": {
+            //      "count": 1,
+            //      "attachedToSpindleFiber": true,
+            //      "kinetochores": 2
+            //     },
+            //     "chromatids": {
+            //      "cellAlignment": "center",
+            //      "count": 2,
+            //      "leftSideCount": 1,
+            //      "rightSideCount": 1
+            //     }
+            //    }
+
+            if (chromosome.chromatids.leftSideCount) {
+              cellAlignment = 'leftSide'
+              tempChromosome = getChromosome(cellAlignment)
+
+              newChromosomes.push(tempChromosome)
+            }
+
+            if (chromosome.chromatids.rightSideCount) {
+              cellAlignment = 'rightSide'
+              tempChromosome = getChromosome(cellAlignment)
+
+              newChromosomes.push(tempChromosome)
+            }
+          })
+
+          return newChromosomes
+
+          function getChromosome (cellAlignment) {
+            let chromosome = {
+              centromeres: {
+                count: 1,
+                attachedToSpindleFiber: true,
+                kinetochores: 1
+              },
+              chromatids: {
+                cellAlignment: cellAlignment,
+                count: 1,
+                leftSideCount: 0,
+                rightSideCount: 0
+              }
+            }
+
+            return chromosome
+          }
+        }
       }
 
       function enterInterphase (cell) {
@@ -151,7 +229,7 @@ const body = {
         }
 
         function addKinetochoresToCentromeres (cell) {
-          const kinetochoreCount = 1
+          const kinetochoreCount = 2
           let chromosomes = cell.organelles.chromosomes
 
           chromosomes.forEach(chromosome => {
@@ -169,7 +247,12 @@ const body = {
         }
 
         function separateCentriolesAndProjectAsters (cell) {
-          cell.organelles.centrioles.hasAsters = true
+          let centrioles = cell.organelles.centrioles
+          
+          centrioles.forEach(centriole=>{
+            centriole.hasAsters = true
+            centriole.astersHaveSpreadAcrossCell = true
+          })
 
           return cell
         }
@@ -192,14 +275,16 @@ const body = {
         if (chromosomes) {
           chromosomes.forEach(chromosome => {
             const chromatidCount = chromosome.chromatids.count
-            let leftSideChromatidCount = chromosome.chromatids.leftSideCount
-            let rightSideChromatidCount = chromosome.chromatids.rightSideCount
+            let leftSideChromatidCount, rightSideChromatidCount
 
             chromosome.centromeres.attachedToSpindleFiber = true
             chromosome.chromatids.cellAlignment = 'center'
 
-            leftSideChromatidCount = chromatidCount / 2
-            rightSideChromatidCount = chromatidCount / 2
+            chromosome.chromatids.leftSideCount = chromatidCount / 2
+            chromosome.chromatids.rightSideCount = chromatidCount / 2
+
+            leftSideChromatidCount = chromosome.chromatids.leftSideCount
+            rightSideChromatidCount = chromosome.chromatids.rightSideCount
 
             chromatidsOnLeftside += leftSideChromatidCount
             chromatidsOnRightside += rightSideChromatidCount
