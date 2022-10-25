@@ -1,3 +1,10 @@
+::2022-10-23::
+started Anaphase
+
+still need to... 
+o clean code all is one place is a bit messy...
+
+
 ::2022-10-22::
 finished modeling metaphase -- with proper chromosome count
 code is still big and messy
