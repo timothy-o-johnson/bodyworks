@@ -2,6 +2,9 @@
 moved daughter chromosomes to respective poles, needs refactor
 not sure we modeled this accurately-- what does it mean to move to respective poles exactly?
 
+also, can we give a big 'holy shit!' in the name of testing?!
+lord, what a mess this would be without that. yiiikes.
+
 ::2022-10-23::
 started Anaphase
 
