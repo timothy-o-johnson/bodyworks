@@ -36,7 +36,8 @@ const body = {
       function enterAnaphase (cell) {
         let cellAfterAnaphase = JSON.parse(JSON.stringify(cell))
         let originalChromosomes = cellAfterAnaphase.organelles.chromosomes
-        const hasSpindleFibers = cellAfterAnaphase.organelles.centrioles[0].hasAsters
+        const hasSpindleFibers =
+          cellAfterAnaphase.organelles.centrioles[0].hasAsters
 
         if (hasSpindleFibers) {
           let newChromosomes = separateChromatidsToBecomeChromosomes(
@@ -44,9 +45,56 @@ const body = {
           )
 
           cellAfterAnaphase.organelles.chromosomes = newChromosomes
+
+          cellAfterAnaphase = moveChromosomesToRespectivePoles(
+            cellAfterAnaphase
+          )
         }
 
         return { cellAfterAnaphase }
+
+        function moveChromosomesToRespectivePoles (cell) {
+          let { leftCentrioles, rightCentrioles } = getRightAndLeftCentrioles(
+            cell
+          )
+
+          console.log({ leftCentrioles, rightCentrioles })
+
+          const chromosomes = cell.organelles.chromosomes
+
+          console.log({ chromosome: chromosomes[0] })
+
+          chromosomes.forEach(chromosome => {
+            const chromosomeCellAlignment = chromosome.chromatids.cellAlignment
+
+            if (chromosomeCellAlignment == 'leftSide') {
+              leftCentrioles[0].chromosomeCount++
+              leftCentrioles[1].chromosomeCount++
+            } else if (chromosomeCellAlignment == 'rightSide') {
+              rightCentrioles[0].chromosomeCount++
+              rightCentrioles[1].chromosomeCount++
+            }
+          })
+
+          console.log({ leftCentrioles, rightCentrioles })
+
+          return cell
+
+          function getRightAndLeftCentrioles (cell) {
+            let leftCentrioles = []
+            let rightCentrioles = []
+
+            cell.organelles.centrioles.map(centriole => {
+              if (centriole.cellAlignment === 'left') {
+                leftCentrioles.push(centriole)
+              } else if (centriole.cellAlignment === 'right') {
+                rightCentrioles.push(centriole)
+              }
+            })
+
+            return { leftCentrioles, rightCentrioles }
+          }
+        }
 
         function separateChromatidsToBecomeChromosomes (chromosomes = []) {
           let newChromosomes = []
@@ -132,10 +180,12 @@ const body = {
             let daughterCentriole = { ...centriole }
             let motherId
             let daughterId
+            let newCellAlignment = null
 
             if (centriole.isDaughter) {
               motherId = 3
               daughterId = 4
+              newCellAlignment = 'right'
 
               // update id
               centriole.id = motherId
@@ -146,7 +196,11 @@ const body = {
               centriole.motherId = null
               centriole.daughterId = daughterId
 
+              // align in cell
+              centriole.cellAlignment = newCellAlignment
+
               daughterCentriole = updateDaughterCentriole(
+                newCellAlignment,
                 daughterCentriole,
                 daughterId,
                 motherId
@@ -154,8 +208,12 @@ const body = {
             } else if (centriole.isMother) {
               motherId = centriole.id
               daughterId = motherId + 1
+              newCellAlignment = 'left'
+
+              centriole.cellAlignment = newCellAlignment
 
               daughterCentriole = updateDaughterCentriole(
+                newCellAlignment,
                 daughterCentriole,
                 daughterId,
                 motherId
@@ -169,6 +227,7 @@ const body = {
         }
 
         function updateDaughterCentriole (
+          cellAlignment,
           daughterCentriole,
           daughterId,
           motherId
@@ -177,6 +236,7 @@ const body = {
           daughterCentriole.isMother = false
           daughterCentriole.isDaughter = true
           daughterCentriole.motherId = motherId
+          daughterCentriole.cellAlignment = cellAlignment
           daughterCentriole.daughterId = null
 
           return daughterCentriole
@@ -248,8 +308,8 @@ const body = {
 
         function separateCentriolesAndProjectAsters (cell) {
           let centrioles = cell.organelles.centrioles
-          
-          centrioles.forEach(centriole=>{
+
+          centrioles.forEach(centriole => {
             centriole.hasAsters = true
             centriole.astersHaveSpreadAcrossCell = true
           })
@@ -323,6 +383,8 @@ const body = {
                   id: motherId,
                   isMother: true,
                   isDaughter: false,
+                  cellAlignment: null,
+                  chromosomeCount: 0,
                   daughterId: daughterId,
                   motherId: null,
                   hasAsters: false,
@@ -332,6 +394,8 @@ const body = {
                   id: daughterId,
                   isMother: false,
                   isDaughter: true,
+                  cellAlignment: null,
+                  chromosomeCount: 0,
                   daughterId: null,
                   motherId: motherId,
                   hasAsters: false,

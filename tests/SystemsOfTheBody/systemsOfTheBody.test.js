@@ -312,6 +312,8 @@ describe('3. Processes', () => {
                   id: motherId,
                   isMother: true,
                   isDaughter: false,
+                  cellAlignment: null,
+                  chromosomeCount: 0,
                   daughterId: daughterId,
                   motherId: null,
                   hasAsters: false,
@@ -321,6 +323,8 @@ describe('3. Processes', () => {
                   id: daughterId,
                   isMother: false,
                   isDaughter: true,
+                  cellAlignment: null,
+                  chromosomeCount: 0,
                   daughterId: null,
                   motherId: motherId,
                   hasAsters: false,
@@ -464,15 +468,10 @@ describe('3. Processes', () => {
         const cellAfterProphase = enterProphase(cell)
         const { centrioles } = cellAfterProphase.organelles
 
-        console.log({centrioles});
-        
-        centrioles.forEach(centriole =>{
+        centrioles.forEach(centriole => {
           expect(centriole.hasAsters).toBe(true)
           expect(centriole.astersHaveSpreadAcrossCell).toBe(true)
-
         })
-
-       
       })
 
       it('G. should form kinetochores on the centromeres', () => {
@@ -580,34 +579,51 @@ describe('3. Processes', () => {
         expect(enterAnaphase).toBeDefined()
       })
 
-      it('B. chromatids separate to become chromosomes and move to the ipsilateral pole of the cell along the spindle fiber.', () => {
+      it('B. chromatids should separate to become chromosomes and move to the ipsilateral pole of the cell along the spindle fiber.', () => {
         const cellAfterMetaphase = getCellAfterMetaphase(cell)
 
         const cellKeys = Object.keys(cellAfterMetaphase)
 
         const { cellAfterAnaphase } = enterAnaphase(cellAfterMetaphase)
 
-
         const chromosomeCount = cellAfterAnaphase.organelles.chromosomes.length
 
         expect(chromosomeCount).toEqual(92)
       })
 
-      it.todo('centriole.containChromosomes')
+      it('daughter chromosomes should arrive at their respective poles (46 on each side)', () => {
+        const cellAfterMetaphase = getCellAfterMetaphase(cell)
+
+        const { cellAfterAnaphase } = enterAnaphase(cellAfterMetaphase)
+
+        console.log({ cellAfterMetaphase })
+
+        console.log({ centrioles: cellAfterAnaphase.organelles.centrioles })
+
+        const centrioles = cellAfterAnaphase.organelles.centrioles
+
+        centrioles.forEach(centriole => {
+          const chromosomeCount = centriole.chromosomeCount
+
+          expect(chromosomeCount).toEqual(46)
+        })
+      })
     })
 
     function getCellAfterProphase (newCell) {
-      let initialCell = JSON.parse(JSON.stringify(newCell))
+      const initialCell = JSON.parse(JSON.stringify(newCell))
 
-      let cellAfterInterphase = enterInterphase(initialCell).cellAfterInterphase
-      let cellAfterProphase = enterProphase(cellAfterInterphase)
+      const cellAfterInterphase = enterInterphase(initialCell)
+        .cellAfterInterphase
+
+      const cellAfterProphase = enterProphase(cellAfterInterphase)
 
       return cellAfterProphase
     }
 
     function getCellAfterMetaphase (newCell) {
-      let cellAfterProphase = getCellAfterProphase(newCell)
-      let cellAfterMetaphase = enterMetaphase(cellAfterProphase)
+      const cellAfterProphase = getCellAfterProphase(newCell)
+      const cellAfterMetaphase = enterMetaphase(cellAfterProphase)
         .cellAfterMetaphase
 
       return cellAfterMetaphase
