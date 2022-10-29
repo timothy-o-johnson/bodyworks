@@ -31,7 +31,7 @@ const body = {
 
       // return daughterCells
 
-      return { enterAnaphase, enterInterphase, enterMetaphase, enterProphase }
+      return { enterAnaphase, enterInterphase, enterMetaphase, enterProphase, enterTelophase }
 
       function enterAnaphase (cell) {
         let cellAfterAnaphase = JSON.parse(JSON.stringify(cell))
@@ -358,6 +358,10 @@ const body = {
           chromatidsOnRightside,
           chromosomes
         }
+      }
+
+      function enterTelophase(cell){
+        
       }
     },
     createCell: organelles => {

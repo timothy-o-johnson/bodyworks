@@ -370,6 +370,7 @@ describe('3. Processes', () => {
     const enterProphase = processes.cellDivisionMitosis().enterProphase
     const enterMetaphase = processes.cellDivisionMitosis().enterMetaphase
     const enterAnaphase = processes.cellDivisionMitosis().enterAnaphase
+    const enterTelophase = processes.cellDivisionMitosis().enterTelophase
 
     it('i. should be defined', () => {
       expect(processes.cellDivisionMitosis).toBeDefined()
@@ -591,7 +592,7 @@ describe('3. Processes', () => {
         expect(chromosomeCount).toEqual(92)
       })
 
-      it('daughter chromosomes should arrive at their respective poles (46 on each side)', () => {
+      it('C. daughter chromosomes should arrive at their respective poles (46 on each side)', () => {
         const cellAfterMetaphase = getCellAfterMetaphase(cell)
 
         const { cellAfterAnaphase } = enterAnaphase(cellAfterMetaphase)
@@ -608,6 +609,14 @@ describe('3. Processes', () => {
           expect(chromosomeCount).toEqual(46)
         })
       })
+    })
+
+    describe(' vi. enterTolophase(),..', () => {
+      it('A. should be defined', ()=>{
+        expect(enterTelophase).toBeDefined()
+      })
+
+      it('B. ')
     })
 
     function getCellAfterProphase (newCell) {
