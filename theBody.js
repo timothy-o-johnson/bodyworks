@@ -31,7 +31,36 @@ const body = {
 
       // return daughterCells
 
-      return { enterAnaphase, enterInterphase, enterMetaphase, enterProphase, enterTelophase }
+      return {
+        enterAnaphase,
+        enterInterphase,
+        enterMetaphase,
+        enterProphase,
+        enterTelophase
+      }
+
+      function addChromosomes (cell, chromosomeCount) {
+        let chromosomes = (cell.organelles.chromosomes = [])
+        const chromosomeObj = {
+          centromeres: {
+            count: 1,
+            attachedToSpindleFiber: false,
+            kinetochores: 0
+          },
+          chromatids: {
+            cellAlignment: null,
+            count: 2,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        }
+
+        for (let i = 0; i < chromosomeCount; i++) {
+          chromosomes.push({ ...chromosomeObj })
+        }
+
+        return cell
+      }
 
       function enterAnaphase (cell) {
         let cellAfterAnaphase = JSON.parse(JSON.stringify(cell))
@@ -58,11 +87,11 @@ const body = {
             cell
           )
 
-          console.log({ leftCentrioles, rightCentrioles })
+          // console.log({ leftCentrioles, rightCentrioles })
 
           const chromosomes = cell.organelles.chromosomes
 
-          console.log({ chromosome: chromosomes[0] })
+          // console.log({ chromosome: chromosomes[0] })
 
           chromosomes.forEach(chromosome => {
             const chromosomeCellAlignment = chromosome.chromatids.cellAlignment
@@ -76,7 +105,7 @@ const body = {
             }
           })
 
-          console.log({ leftCentrioles, rightCentrioles })
+          // console.log({ leftCentrioles, rightCentrioles })
 
           return cell
 
@@ -265,29 +294,6 @@ const body = {
 
         return cellAfterProphase
 
-        function addChromosomes (cell, chromosomeCount) {
-          let chromosomes = (cellAfterProphase.organelles.chromosomes = [])
-          const chromosomeObj = {
-            centromeres: {
-              count: 1,
-              attachedToSpindleFiber: false,
-              kinetochores: 0
-            },
-            chromatids: {
-              cellAlignment: null,
-              count: 2,
-              leftSideCount: 0,
-              rightSideCount: 0
-            }
-          }
-
-          for (let i = 0; i < chromosomeCount; i++) {
-            chromosomes.push({ ...chromosomeObj })
-          }
-
-          return cell
-        }
-
         function addKinetochoresToCentromeres (cell) {
           const kinetochoreCount = 2
           let chromosomes = cell.organelles.chromosomes
@@ -360,8 +366,65 @@ const body = {
         }
       }
 
-      function enterTelophase(cell){
-        
+      function enterTelophase (cell) {
+        let cells = []
+        const daughterCellCount = 2
+        const chromosomes = cell.organelles.chromosomes
+        const { leftChromosomes, rightChromosomes } = getChromosomes(
+          chromosomes
+        )
+
+        console.log({ leftChromosomes, rightChromosomes })
+
+        for (var count = 0; count < daughterCellCount; count++) {
+          const countIsEven = count % 2 == 0
+          const organelles = body.generalizedCell.organelles
+          const newCellChromosomes = countIsEven
+            ? leftChromosomes
+            : rightChromosomes
+          let newCell = body.processes.createCell(organelles)
+          
+          // const chromosomeCount = countIsEven
+          //   ? leftChromosomeCt
+          //   : rightChromosomeCt
+
+          newCell.organelles.chromosomes = newCellChromosomes
+
+          cells.push(newCell)
+        }
+
+        return cells
+
+        function getChromosomes (chromosomes = []) {
+          let leftChromosomes = [],
+            rightChromosomes = []
+
+          // const chromosomeObj = {
+          //   centromeres: {
+          //     count: 1,
+          //     attachedToSpindleFiber: false,
+          //     kinetochores: 0
+          //   },
+          //   chromatids: {
+          //     cellAlignment: null,
+          //     count: 2,
+          //     leftSideCount: 0,
+          //     rightSideCount: 0
+          //   }
+          // }
+
+          chromosomes.map(chromosome => {
+            const cellAlignment = chromosome.chromatids.cellAlignment
+            if (cellAlignment == 'leftSide') {
+              leftChromosomes.push({ ...chromosome })
+            }
+            if (cellAlignment == 'rightSide') {
+              rightChromosomes.push({ ...chromosome })
+            }
+          })
+
+          return { leftChromosomes, rightChromosomes }
+        }
       }
     },
     createCell: organelles => {
@@ -406,10 +469,6 @@ const body = {
                   astersHaveSpreadAcrossCell: false
                 }
               ]
-            } else if (organelle === 'chromatin') {
-              cellWithOrganelles['organelles'][organelle] = {
-                count: 1
-              }
             } else {
               cellWithOrganelles['organelles'][organelle] = {
                 count: 1

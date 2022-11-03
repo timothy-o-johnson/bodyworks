@@ -597,9 +597,7 @@ describe('3. Processes', () => {
 
         const { cellAfterAnaphase } = enterAnaphase(cellAfterMetaphase)
 
-        console.log({ cellAfterMetaphase })
-
-        console.log({ centrioles: cellAfterAnaphase.organelles.centrioles })
+        // console.log({ centrioles: cellAfterAnaphase.organelles.centrioles })
 
         const centrioles = cellAfterAnaphase.organelles.centrioles
 
@@ -612,18 +610,85 @@ describe('3. Processes', () => {
     })
 
     describe(' vi. enterTolophase(),..', () => {
-      it('A. should be defined', ()=>{
+      it('A. should be defined', () => {
         expect(enterTelophase).toBeDefined()
       })
 
-      it('B. ')
+      describe('B. should pinch the cell off in the center, forming two daughter cells, each identical to the mother cell (assuming no mutations)', () => {
+        let cell = getCellAfterAnaphase(newCell)
+        const cells = enterTelophase(cell)
+
+        expect(cells.length).toEqual = 2
+
+        // divide the contents from the cell afterAnaphase into the two new cells
+        // should split the chromosomes
+        const leftCell = cells[0]
+        const rightCell = cells[1]
+
+        const organelles = cell.organelles
+        const organelleKeys = Object.keys(organelles)
+
+        console.log({ organelleKeys })
+
+        organelleKeys.forEach((organelle, idx) => {
+          it(`${idx + 1}: ${organelle}`, () => {
+            const leftCellOrganelle = leftCell.organelles[organelle]
+            let cellOrganelle
+            const rightCellOrganelle = rightCell.organelles[organelle]
+
+            if (organelle === 'chromosomes') {
+              // based on original cell
+              cellOrganelle = cell.organelles[organelle]
+              const { lftChromsCt, rghtChromsCt } = getChromsCts(cellOrganelle)
+
+              expect(leftCellOrganelle.length).toEqual(lftChromsCt)
+              expect(rightCellOrganelle.length).toEqual(rghtChromsCt)
+            } else {
+              // based of of new cell 
+              cellOrganelle = newCell.organelles[organelle]
+
+              expect(leftCellOrganelle.count).toEqual(cellOrganelle.count)
+              expect(rightCellOrganelle.count).toEqual(cellOrganelle.count)
+            }
+          })
+        })
+      })
     })
+
+    function getChromsCts (chromosomes = []) {
+      let leftChromosomesCt = 0,
+        rightChromosomesCt = 0
+
+      // const chromosomeObj = {
+      //   centromeres: {
+      //     count: 1,
+      //     attachedToSpindleFiber: false,
+      //     kinetochores: 0
+      //   },
+      //   chromatids: {
+      //     cellAlignment: null,
+      //     count: 2,
+      //     leftSideCount: 0,
+      //     rightSideCount: 0
+      //   }
+      // }
+
+      chromosomes.map(chromosome => {
+        const cellAlignment = chromosome.chromatids.cellAlignment
+        if (cellAlignment == 'leftSide') leftChromosomesCt++
+        if (cellAlignment == 'rightSide') rightChromosomesCt++
+      })
+
+      return {
+        lftChromsCt: leftChromosomesCt,
+        rghtChromsCt: rightChromosomesCt
+      }
+    }
 
     function getCellAfterProphase (newCell) {
       const initialCell = JSON.parse(JSON.stringify(newCell))
 
-      const cellAfterInterphase = enterInterphase(initialCell)
-        .cellAfterInterphase
+      const { cellAfterInterphase } = enterInterphase(initialCell)
 
       const cellAfterProphase = enterProphase(cellAfterInterphase)
 
@@ -632,10 +697,16 @@ describe('3. Processes', () => {
 
     function getCellAfterMetaphase (newCell) {
       const cellAfterProphase = getCellAfterProphase(newCell)
-      const cellAfterMetaphase = enterMetaphase(cellAfterProphase)
-        .cellAfterMetaphase
+      const { cellAfterMetaphase } = enterMetaphase(cellAfterProphase)
 
       return cellAfterMetaphase
+    }
+
+    function getCellAfterAnaphase (newCell) {
+      const cellAfterMetaphase = getCellAfterMetaphase(newCell)
+      const { cellAfterAnaphase } = enterAnaphase(cellAfterMetaphase)
+
+      return cellAfterAnaphase
     }
   })
 })
