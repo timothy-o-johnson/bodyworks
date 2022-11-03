@@ -1,3 +1,13 @@
+::2022-11-03::
+handled the chromosomes pretty well
+debating on weather to handle centrioles as carefully
+also debating on whether to delete the orignal cell, since it no longer exists an entity
+
+::2022-11-01::
+suspecting that a major takeaway in modeling nature is that it may be better to create all the properties will ever be known to have rather than to add or delete them as would happen in the real world.
+
+it makes setting properties easy later if the property is already part of the class
+
 ::2022-10-25::
 moved daughter chromosomes to respective poles, needs refactor
 not sure we modeled this accurately-- what does it mean to move to respective poles exactly?
