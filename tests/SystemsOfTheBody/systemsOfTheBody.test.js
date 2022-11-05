@@ -621,7 +621,8 @@ describe('3. Processes', () => {
         expect(cells.length).toEqual = 2
 
         // divide the contents from the cell afterAnaphase into the two new cells
-        // should split the chromosomes
+        // should split the centrioles and chromosomes from mother cell and bsse the rest of the organelles from a new cell template (since it was essentially not modeled from)
+
         const leftCell = cells[0]
         const rightCell = cells[1]
 
@@ -629,14 +630,23 @@ describe('3. Processes', () => {
         const organelleKeys = Object.keys(organelles)
 
         console.log({ organelleKeys })
+        console.log({ centriole: cell.organelles.centrioles })
 
         organelleKeys.forEach((organelle, idx) => {
           it(`${idx + 1}: ${organelle}`, () => {
-            const leftCellOrganelle = leftCell.organelles[organelle]
             let cellOrganelle
+
+            const leftCellOrganelle = leftCell.organelles[organelle]
             const rightCellOrganelle = rightCell.organelles[organelle]
 
-            if (organelle === 'chromosomes') {
+            if (organelle === 'centrioles') {
+              // based on original cell
+              cellOrganelle = cell.organelles[organelle]
+              const { lftCentrioles, rghtCentrioles } = getCentrioles(cellOrganelle)
+
+              expect(leftCellOrganelle).toEqual(lftCentrioles)
+              expect(rightCellOrganelle).toEqual(rghtCentrioles)
+            } else  if (organelle === 'chromosomes') {
               // based on original cell
               cellOrganelle = cell.organelles[organelle]
               const { lftChromsCt, rghtChromsCt } = getChromsCts(cellOrganelle)
@@ -644,7 +654,7 @@ describe('3. Processes', () => {
               expect(leftCellOrganelle.length).toEqual(lftChromsCt)
               expect(rightCellOrganelle.length).toEqual(rghtChromsCt)
             } else {
-              // based of of new cell 
+              // based of of new cell template
               cellOrganelle = newCell.organelles[organelle]
 
               expect(leftCellOrganelle.count).toEqual(cellOrganelle.count)
@@ -655,6 +665,37 @@ describe('3. Processes', () => {
       })
     })
 
+    function getCentrioles (centrioles = []) {
+      let leftCentrioles = [],
+        rightCentrioles = []
+
+        // centriole: [
+        //   {
+        //     id: 1,
+        //     isMother: true,
+        //     isDaughter: false,
+        //     cellAlignment: 'left',
+        //     chromosomeCount: 46,
+        //     daughterId: 2,
+        //     motherId: null,
+        //     hasAsters: true,
+        //     astersHaveSpreadAcrossCell: true
+        //   }
+        // ]
+
+      centrioles.map(centriole => {
+        // const cellAlignment = chromosome.chromatids.cellAlignment
+        if (centriole.id < 3) leftCentrioles.push({...centriole})
+        if (centriole.id > 2) rightCentrioles.push({...centriole})
+       
+      })
+
+      return {
+        lftCentrioles: leftCentrioles,
+        rghtCentrioles: rightCentrioles
+      }
+    }
+    
     function getChromsCts (chromosomes = []) {
       let leftChromosomesCt = 0,
         rightChromosomesCt = 0

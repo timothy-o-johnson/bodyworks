@@ -369,12 +369,11 @@ const body = {
       function enterTelophase (cell) {
         let cells = []
         const daughterCellCount = 2
-        const chromosomes = cell.organelles.chromosomes
-        const { leftChromosomes, rightChromosomes } = getChromosomes(
-          chromosomes
-        )
 
-        console.log({ leftChromosomes, rightChromosomes })
+        const { leftChromosomes, rightChromosomes } = getChromosomes(cell)
+        const { lftCentrioles, rghtCentrioles } = getCentrioles(cell)
+
+        // console.log({ leftChromosomes, rightChromosomes })
 
         for (var count = 0; count < daughterCellCount; count++) {
           const countIsEven = count % 2 == 0
@@ -382,12 +381,16 @@ const body = {
           const newCellChromosomes = countIsEven
             ? leftChromosomes
             : rightChromosomes
+
+          const newCellCentrioles = countIsEven ? lftCentrioles : rghtCentrioles
+
           let newCell = body.processes.createCell(organelles)
-          
+
           // const chromosomeCount = countIsEven
           //   ? leftChromosomeCt
           //   : rightChromosomeCt
 
+          newCell.organelles.centrioles = newCellCentrioles
           newCell.organelles.chromosomes = newCellChromosomes
 
           cells.push(newCell)
@@ -395,7 +398,39 @@ const body = {
 
         return cells
 
-        function getChromosomes (chromosomes = []) {
+        function getCentrioles (cell) {
+          const centrioles = cell.organelles.centrioles
+          let leftCentrioles = [],
+            rightCentrioles = []
+
+          // centriole: [
+          //   {
+          //     id: 1,
+          //     isMother: true,
+          //     isDaughter: false,
+          //     cellAlignment: 'left',
+          //     chromosomeCount: 46,
+          //     daughterId: 2,
+          //     motherId: null,
+          //     hasAsters: true,
+          //     astersHaveSpreadAcrossCell: true
+          //   }
+          // ]
+
+          centrioles.map(centriole => {
+            // const cellAlignment = chromosome.chromatids.cellAlignment
+            if (centriole.id < 3) leftCentrioles.push({ ...centriole })
+            if (centriole.id > 2) rightCentrioles.push({ ...centriole })
+          })
+
+          return {
+            lftCentrioles: leftCentrioles,
+            rghtCentrioles: rightCentrioles
+          }
+        }
+
+        function getChromosomes (cell) {
+          const chromosomes = cell.organelles.chromosomes
           let leftChromosomes = [],
             rightChromosomes = []
 
