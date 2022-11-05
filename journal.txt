@@ -1,3 +1,15 @@
+::2022-11-05::
+hm... except for the centrioles and chromosomes, not feeling great about how qualitatively the organelles are being handled.
+
+like all other parts of this project: could use some refactoring
+would be nice talk to some computer science person to consider whether it's better to have cell properties exist on a cell at creation whether or not they exist rather than add them
+
+it makes it more complicated to add delete them at various stages, but then again... it probably speaks to the purpose/philosophy of a model
+
+i'm thinking i could use Netsuite/Oracle records as a model and assume they are applying best practices-- unless they aren't and are beholden to a decision they made long along
+
+looking forward to warpping up enterTelophase() soon and doing an integrated test and some refactoring
+
 ::2022-11-03::
 handled the chromosomes pretty well
 debating on weather to handle centrioles as carefully
