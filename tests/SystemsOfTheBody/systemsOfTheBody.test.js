@@ -615,7 +615,7 @@ describe('3. Processes', () => {
       })
 
       describe('B. should pinch the cell off in the center, forming two daughter cells, each identical to the mother cell (assuming no mutations)', () => {
-        describe('i. the cytoplasm and organelles, having duplicated earlier, should segregate into their respective newly forming cells', () => {
+        describe(' i. the cytoplasm and organelles, having duplicated earlier, should segregate into their respective newly forming cells', () => {
           let cell = getCellAfterAnaphase(newCell)
           const cells = enterTelophase(cell)
 
@@ -668,6 +668,28 @@ describe('3. Processes', () => {
             })
           })
         })
+
+        describe(' ii. should reconstitute the nucleus (the nuclear membrane and nucleolus) in each new cell', () => {
+          let cell = getCellAfterAnaphase(newCell)
+          const cells = enterTelophase(cell)
+
+          expect(cells.length).toEqual = 2
+
+          const leftCell = cells[0]
+          const rightCell = cells[1]
+
+          it('a. nuclearMembrane', () => {
+            expect(leftCell.organelles.nuclearMembrane.count).toEqual(1)
+            expect(rightCell.organelles.nuclearMembrane.count).toEqual(1)
+          })
+
+          it('b. nucleolus', () => {
+            expect(leftCell.organelles.nucleolus.count).toEqual(1)
+            expect(rightCell.organelles.nucleolus.count).toEqual(1)
+          })
+        })
+
+        describe('iii. the chromosomes fade into dispersed chromatin, and the centromere disappears', () => {})
       })
     })
 
