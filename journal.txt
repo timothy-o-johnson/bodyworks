@@ -1,3 +1,17 @@
+::2022-11-09::
+again going to need some refactoring
+and it's going to require me to revisit how i'm adding chromosomes in the first step
+but i'm pretty enthused that we may have made it through the entire process!!
+
+::2022-11-07::
+annoying how nucleus isn't really mentioned as part of the cell... from what I can tell and but then it's included as in the phases of mitosis
+
+long story short, i haven't/am not sure if i have modeled the reconstitution of the nucleus...
+
+we are going to convert the chromosomes into a string to capture the notion of being "dispersed". because we think it's important to keep the data in the cell even if just in another format
+
+o model the reconstitution of nucleus
+
 ::2022-11-05::
 hm... except for the centrioles and chromosomes, not feeling great about how qualitatively the organelles are being handled.
 
