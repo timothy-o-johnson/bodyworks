@@ -369,20 +369,30 @@ const body = {
       function enterTelophase (cell) {
         let cells = []
         const daughterCellCount = 2
+        let testObj ={
+          leftCell:{
+            chromesBeforeDisolution: []
+          },
+          rightCell:{
+            chromesBeforeDisolution:[]
+          }
+        }
 
         const { leftChromosomes, rightChromosomes } = getChromosomes(cell)
         const { lftCentrioles, rghtCentrioles } = getCentrioles(cell)
 
         // console.log({ leftChromosomes, rightChromosomes })
-
+        
         for (var count = 0; count < daughterCellCount; count++) {
           const countIsEven = count % 2 == 0
           const organelles = body.generalizedCell.organelles
-          const newCellChromosomes = countIsEven
+          let newCellChromosomes = countIsEven
             ? leftChromosomes
             : rightChromosomes
 
           const newCellCentrioles = countIsEven ? lftCentrioles : rghtCentrioles
+
+          let testObjCell = countIsEven ? testObj.leftCell : testObj.rightCell
 
           let newCell = body.processes.createCell(organelles)
 
@@ -390,13 +400,18 @@ const body = {
           //   ? leftChromosomeCt
           //   : rightChromosomeCt
 
-          newCell.organelles.centrioles = newCellCentrioles
-          newCell.organelles.chromosomes = newCellChromosomes
+          newCellChromosomes = removeMeres(newCellChromosomes)
+          testObjCell.chromesBeforeDisolution = [...newCellChromosomes]
 
+          newCell.organelles.centrioles = newCellCentrioles
+        
+          newCell.organelles.chromatin = JSON.stringify(newCellChromosomes)
+          newCell.organelles.chromosomes = []
+          
           cells.push(newCell)
         }
 
-        return cells
+        return {cells, testObj}
 
         function getCentrioles (cell) {
           const centrioles = cell.organelles.centrioles
@@ -459,6 +474,17 @@ const body = {
           })
 
           return { leftChromosomes, rightChromosomes }
+        }
+
+        function removeMeres(chromosomes = []){
+          let chromosomesWoMeres = JSON.parse(JSON.stringify(chromosomes))
+
+          chromosomesWoMeres.forEach(chromosome =>{
+            chromosome.centromeres.count = 0
+          })
+
+          return chromosomesWoMeres
+
         }
       }
     },

@@ -617,7 +617,7 @@ describe('3. Processes', () => {
       describe('B. should pinch the cell off in the center, forming two daughter cells, each identical to the mother cell (assuming no mutations)', () => {
         describe(' i. the cytoplasm and organelles, having duplicated earlier, should segregate into their respective newly forming cells', () => {
           let cell = getCellAfterAnaphase(newCell)
-          const cells = enterTelophase(cell)
+          const { cells, testObj } = enterTelophase(cell)
 
           expect(cells.length).toEqual = 2
 
@@ -649,6 +649,12 @@ describe('3. Processes', () => {
 
                 expect(leftCellOrganelle).toEqual(lftCentrioles)
                 expect(rightCellOrganelle).toEqual(rghtCentrioles)
+              } else if (organelle === 'chromatin') {
+                // based on original cell
+                cellOrganelle = cell.organelles[organelle]
+
+                expect(typeof leftCellOrganelle).toEqual('string')
+                expect(typeof rightCellOrganelle).toEqual('string')
               } else if (organelle === 'chromosomes') {
                 // based on original cell
                 cellOrganelle = cell.organelles[organelle]
@@ -656,8 +662,8 @@ describe('3. Processes', () => {
                   cellOrganelle
                 )
 
-                expect(leftCellOrganelle.length).toEqual(lftChromsCt)
-                expect(rightCellOrganelle.length).toEqual(rghtChromsCt)
+                expect(testObj.leftCell.chromesBeforeDisolution.length).toEqual(lftChromsCt)
+                expect(testObj.rightCell.chromesBeforeDisolution.length).toEqual(rghtChromsCt)
               } else {
                 // based of of new cell template
                 cellOrganelle = newCell.organelles[organelle]
@@ -671,7 +677,7 @@ describe('3. Processes', () => {
 
         describe(' ii. should reconstitute the nucleus (the nuclear membrane and nucleolus) in each new cell', () => {
           let cell = getCellAfterAnaphase(newCell)
-          const cells = enterTelophase(cell)
+          const { cells } = enterTelophase(cell)
 
           expect(cells.length).toEqual = 2
 
@@ -689,9 +695,58 @@ describe('3. Processes', () => {
           })
         })
 
-        describe('iii. the chromosomes fade into dispersed chromatin, and the centromere disappears', () => {})
+        describe('iii. the chromosomes fade into dispersed chromatin, and the centromere disappears', () => {
+          let cell = getCellAfterAnaphase(newCell)
+          const { cells, testObj } = enterTelophase(cell)
+
+          expect(cells.length).toEqual = 2
+
+          const leftCell = cells[0]
+          const rightCell = cells[1]
+
+          // remove the centromeres (but do they really disappear? ie should i delete them or is 'dispersing' them enough)
+          it('a. remove centromeres', () => {
+            const leftChromes = testObj.leftCell.chromesBeforeDisolution//.chromosomes
+            const rightChromes = testObj.rightCell.chromesBeforeDisolution
+
+            const leftChromesHaveCentromeres = doChromesHaveMeres(leftChromes)
+            const rightChromesHaveCentromeres = doChromesHaveMeres(rightChromes)
+
+            expect(leftChromesHaveCentromeres).toEqual(false)
+            expect(rightChromesHaveCentromeres).toEqual(false)
+          })
+
+          // convert chromosome object into a string on the chromitid organelle
+          it('b. fade chromosomes into dispersed chromatin', () => {
+            // expect(leftCell.organelles.chromosomes).toEqual([])
+            // expect(rightCell.organelles.chromosomes).toEqual([])
+
+            expect(leftCell.organelles.chromatin).toBe(
+              JSON.stringify(testObj.leftCell.chromesBeforeDisolution)
+            )
+            expect(rightCell.organelles.chromatin).toBe(
+              JSON.stringify(testObj.rightCell.chromesBeforeDisolution)
+            )
+
+            expect(leftCell.organelles.chromosomes).toEqual([])
+            expect(rightCell.organelles.chromosomes).toEqual([])
+          })
+        })
       })
     })
+
+    function doChromesHaveMeres (chromosomes) {
+      let chromesHaveMeres = false
+
+      for (let i = 0; i < chromosomes.length; i++) {
+        if (chromosomes[i].centromeres.count) {
+          chromesHaveMeres = true
+          break
+        }
+      }
+
+      return chromesHaveMeres
+    }
 
     function getCentrioles (centrioles = []) {
       let leftCentrioles = [],
