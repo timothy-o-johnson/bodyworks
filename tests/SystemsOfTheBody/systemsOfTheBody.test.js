@@ -417,13 +417,29 @@ describe('3. Processes', () => {
       })
 
       it('B. should thicken, shorten, and coil dispersed chromatin to form condensed chromatin chromosomes', () => {
-        const expectedChromosomeCount = 46
+        const scenarios = [
+          // isNewCell
+          true,
+          false
+        ]
 
-        const cellAfterProphase = enterProphase(cell)
+        let mockCell = JSON.parse(JSON.stringify(cell))
 
-        expect(cellAfterProphase.organelles.chromosomes.length).toEqual(
-          expectedChromosomeCount
-        )
+        scenarios.forEach(scenario => {
+          const isNewCell = scenario
+          const expectedChromosomeCount = 46
+
+          if (!isNewCell) {
+            const mockChromosomes = getMockChromosomesWoMeres()
+            mockCell.organelles.chromatin = JSON.stringify(mockChromosomes)
+          }
+
+          const cellAfterProphase = enterProphase(mockCell)
+
+          expect(cellAfterProphase.organelles.chromosomes.length).toEqual(
+            expectedChromosomeCount
+          )
+        })
       })
 
       it('C. should ensure each chromosome is composed of two chromatids connected by a centromere', () => {
@@ -662,8 +678,12 @@ describe('3. Processes', () => {
                   cellOrganelle
                 )
 
-                expect(testObj.leftCell.chromesBeforeDisolution.length).toEqual(lftChromsCt)
-                expect(testObj.rightCell.chromesBeforeDisolution.length).toEqual(rghtChromsCt)
+                expect(testObj.leftCell.chromesBeforeDisolution.length).toEqual(
+                  lftChromsCt
+                )
+                expect(
+                  testObj.rightCell.chromesBeforeDisolution.length
+                ).toEqual(rghtChromsCt)
               } else {
                 // based of of new cell template
                 cellOrganelle = newCell.organelles[organelle]
@@ -706,7 +726,7 @@ describe('3. Processes', () => {
 
           // remove the centromeres (but do they really disappear? ie should i delete them or is 'dispersing' them enough)
           it('a. remove centromeres', () => {
-            const leftChromes = testObj.leftCell.chromesBeforeDisolution//.chromosomes
+            const leftChromes = testObj.leftCell.chromesBeforeDisolution //.chromosomes
             const rightChromes = testObj.rightCell.chromesBeforeDisolution
 
             const leftChromesHaveCentromeres = doChromesHaveMeres(leftChromes)
@@ -720,6 +740,9 @@ describe('3. Processes', () => {
           it('b. fade chromosomes into dispersed chromatin', () => {
             // expect(leftCell.organelles.chromosomes).toEqual([])
             // expect(rightCell.organelles.chromosomes).toEqual([])
+            console.log(
+              JSON.stringify(testObj.leftCell.chromesBeforeDisolution)
+            )
 
             expect(leftCell.organelles.chromatin).toBe(
               JSON.stringify(testObj.leftCell.chromesBeforeDisolution)
@@ -830,6 +853,611 @@ describe('3. Processes', () => {
       const { cellAfterAnaphase } = enterAnaphase(cellAfterMetaphase)
 
       return cellAfterAnaphase
+    }
+
+    function getMockChromosomesWoMeres () {
+      const chromosomesWoMeres = [
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        },
+        {
+          centromeres: {
+            count: 0,
+            attachedToSpindleFiber: true,
+            kinetochores: 1
+          },
+          chromatids: {
+            cellAlignment: 'leftSide',
+            count: 1,
+            leftSideCount: 0,
+            rightSideCount: 0
+          }
+        }
+      ]
+
+      return chromosomesWoMeres
     }
   })
 })

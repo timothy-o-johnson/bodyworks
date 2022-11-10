@@ -274,11 +274,25 @@ const body = {
 
       function enterProphase (cell) {
         let cellAfterProphase = JSON.parse(JSON.stringify(cell))
+        let chromatin = cell.organelles.chromatin
 
-        const cellHasChromatin = cell.organelles.chromatin.count
+        const cellHasChromatin = chromatin && typeof chromatin === 'string'
         const chromosomeCount = 46
 
         if (cellHasChromatin) {
+          cellAfterProphase = createChromosomesFromChromatin(
+            cellAfterProphase,
+            chromatin
+          )
+
+          function createChromosomesFromChromatin (cell, chromatin) {
+            const chromosomes = JSON.parse(chromatin)
+
+            cell.organelles.chromosomes = chromosomes
+
+            return cell
+          }
+        } else {
           cellAfterProphase = addChromosomes(cellAfterProphase, chromosomeCount)
         }
 
@@ -369,12 +383,12 @@ const body = {
       function enterTelophase (cell) {
         let cells = []
         const daughterCellCount = 2
-        let testObj ={
-          leftCell:{
+        let testObj = {
+          leftCell: {
             chromesBeforeDisolution: []
           },
-          rightCell:{
-            chromesBeforeDisolution:[]
+          rightCell: {
+            chromesBeforeDisolution: []
           }
         }
 
@@ -382,7 +396,7 @@ const body = {
         const { lftCentrioles, rghtCentrioles } = getCentrioles(cell)
 
         // console.log({ leftChromosomes, rightChromosomes })
-        
+
         for (var count = 0; count < daughterCellCount; count++) {
           const countIsEven = count % 2 == 0
           const organelles = body.generalizedCell.organelles
@@ -404,14 +418,14 @@ const body = {
           testObjCell.chromesBeforeDisolution = [...newCellChromosomes]
 
           newCell.organelles.centrioles = newCellCentrioles
-        
+
           newCell.organelles.chromatin = JSON.stringify(newCellChromosomes)
           newCell.organelles.chromosomes = []
-          
+
           cells.push(newCell)
         }
 
-        return {cells, testObj}
+        return { cells, testObj }
 
         function getCentrioles (cell) {
           const centrioles = cell.organelles.centrioles
@@ -476,18 +490,18 @@ const body = {
           return { leftChromosomes, rightChromosomes }
         }
 
-        function removeMeres(chromosomes = []){
+        function removeMeres (chromosomes = []) {
           let chromosomesWoMeres = JSON.parse(JSON.stringify(chromosomes))
 
-          chromosomesWoMeres.forEach(chromosome =>{
+          chromosomesWoMeres.forEach(chromosome => {
             chromosome.centromeres.count = 0
           })
 
           return chromosomesWoMeres
-
         }
       }
     },
+
     createCell: organelles => {
       let cell = { organelles: {}, shape: null }
 

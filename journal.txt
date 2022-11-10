@@ -1,3 +1,6 @@
+::2022-11-10::
+improve how enterProphase() handless the creation of chomosomes depending on whether the cell is new or not
+
 ::2022-11-09::
 again going to need some refactoring
 and it's going to require me to revisit how i'm adding chromosomes in the first step
