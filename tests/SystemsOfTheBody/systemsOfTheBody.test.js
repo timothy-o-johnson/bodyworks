@@ -354,7 +354,7 @@ describe('3. Processes', () => {
           }
         })
 
-        console.log(JSON.stringify(expectedCell, '', ' '))
+        // console.log(JSON.stringify(expectedCell, '', ' '))
 
         return expectedOrganelles
       }
@@ -371,6 +371,7 @@ describe('3. Processes', () => {
     const enterMetaphase = processes.cellDivisionMitosis().enterMetaphase
     const enterAnaphase = processes.cellDivisionMitosis().enterAnaphase
     const enterTelophase = processes.cellDivisionMitosis().enterTelophase
+    const cellDivisionMitosis = processes.cellDivisionMitosis
 
     it('i. should be defined', () => {
       expect(processes.cellDivisionMitosis).toBeDefined()
@@ -637,6 +638,9 @@ describe('3. Processes', () => {
 
           expect(cells.length).toEqual = 2
 
+          // console.log(JSON.stringify(cells));
+          console.log(JSON.stringify(cells, '', ' '))
+
           // divide the contents from the cell afterAnaphase into the two new cells
           // should split the centrioles and chromosomes from mother cell and bsse the rest of the organelles from a new cell template (since it was essentially not modeled from)
 
@@ -646,8 +650,8 @@ describe('3. Processes', () => {
           const organelles = cell.organelles
           const organelleKeys = Object.keys(organelles)
 
-          console.log({ organelleKeys })
-          console.log({ centriole: cell.organelles.centrioles })
+          // console.log({ organelleKeys })
+          // console.log({ centriole: cell.organelles.centrioles })
 
           organelleKeys.forEach((organelle, idx) => {
             it(`${idx + 1}: ${organelle}`, () => {
@@ -740,9 +744,9 @@ describe('3. Processes', () => {
           it('b. fade chromosomes into dispersed chromatin', () => {
             // expect(leftCell.organelles.chromosomes).toEqual([])
             // expect(rightCell.organelles.chromosomes).toEqual([])
-            console.log(
-              JSON.stringify(testObj.leftCell.chromesBeforeDisolution)
-            )
+            // console.log(
+            //   JSON.stringify(testObj.leftCell.chromesBeforeDisolution)
+            // )
 
             expect(leftCell.organelles.chromatin).toBe(
               JSON.stringify(testObj.leftCell.chromesBeforeDisolution)
@@ -756,6 +760,13 @@ describe('3. Processes', () => {
           })
         })
       })
+    })
+
+    it('integrated test! should take in a new cell and spit out an array of two daughter cells', () => {
+      const daughterCells = cellDivisionMitosis(newCell)
+      const expectedDaughterCells = getDaughterCells()
+
+      expect(daughterCells).toMatchObject(expectedDaughterCells)
     })
 
     function doChromesHaveMeres (chromosomes) {
@@ -1458,6 +1469,163 @@ describe('3. Processes', () => {
       ]
 
       return chromosomesWoMeres
+    }
+
+    function getDaughterCells () {
+      const daughterCells = [
+        {
+          organelles: {
+            cellMembrane: {
+              count: 1
+            },
+            chromatin:
+              '[{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"leftSide","count":1,"leftSideCount":0,"rightSideCount":0}}]',
+            nuclearMembrane: {
+              count: 1
+            },
+            nucleoplasm: {
+              count: 1
+            },
+            nucleolus: {
+              count: 1
+            },
+            cytoplasm: {
+              count: 1
+            },
+            endoplasmicReticulum: {
+              rough: {
+                count: 1
+              },
+              smooth: {
+                count: 1
+              }
+            },
+            ribosome: {
+              count: 1
+            },
+            golgiComplex: {
+              count: 1
+            },
+            mitochrondrion: {
+              count: 1
+            },
+            vacuole: {
+              count: 1
+            },
+            lysosome: {
+              count: 1
+            },
+            centrioles: [
+              {
+                id: 1,
+                isMother: true,
+                isDaughter: false,
+                cellAlignment: 'left',
+                chromosomeCount: 46,
+                daughterId: 2,
+                motherId: null,
+                hasAsters: true,
+                astersHaveSpreadAcrossCell: true
+              },
+              {
+                id: 2,
+                isMother: false,
+                isDaughter: true,
+                cellAlignment: 'left',
+                chromosomeCount: 46,
+                daughterId: null,
+                motherId: 1,
+                hasAsters: true,
+                astersHaveSpreadAcrossCell: true
+              }
+            ],
+            microtubule: {
+              count: 1
+            },
+            microfilament: {
+              count: 1
+            },
+            chromosomes: []
+          },
+          shape: null
+        },
+        {
+          organelles: {
+            cellMembrane: {
+              count: 1
+            },
+            chromatin:
+              '[{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}},{"centromeres":{"count":0,"attachedToSpindleFiber":true,"kinetochores":1},"chromatids":{"cellAlignment":"rightSide","count":1,"leftSideCount":0,"rightSideCount":0}}]',
+            nuclearMembrane: {
+              count: 1
+            },
+            nucleoplasm: {
+              count: 1
+            },
+            nucleolus: {
+              count: 1
+            },
+            cytoplasm: {
+              count: 1
+            },
+            endoplasmicReticulum: {
+              rough: {
+                count: 1
+              },
+              smooth: {
+                count: 1
+              }
+            },
+            ribosome: {
+              count: 1
+            },
+            golgiComplex: {
+              count: 1
+            },
+            mitochrondrion: {
+              count: 1
+            },
+            vacuole: {
+              count: 1
+            },
+            lysosome: {
+              count: 1
+            },
+            centrioles: [
+              {
+                id: 3,
+                isMother: true,
+                isDaughter: false,
+                cellAlignment: 'right',
+                chromosomeCount: 46,
+                daughterId: 4,
+                motherId: null,
+                hasAsters: true,
+                astersHaveSpreadAcrossCell: true
+              },
+              {
+                id: 4,
+                isMother: false,
+                isDaughter: true,
+                cellAlignment: 'right',
+                chromosomeCount: 46,
+                daughterId: null,
+                motherId: 3,
+                hasAsters: true,
+                astersHaveSpreadAcrossCell: true
+              }
+            ],
+            microtubule: {
+              count: 1
+            },
+            microfilament: {
+              count: 1
+            },
+            chromosomes: []
+          },
+          shape: null
+        }
+      ]
     }
   })
 })

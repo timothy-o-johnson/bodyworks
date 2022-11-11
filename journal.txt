@@ -1,5 +1,11 @@
+::2022-11-11::
+
+begin working on integratedd test for cellDivisionMitosis()
+
+progress! :)
+
 ::2022-11-10::
-improve how enterProphase() handless the creation of chomosomes depending on whether the cell is new or not
+enterProphase() handles the creation of chomosomes differently depending on whether the cell is new or not
 
 ::2022-11-09::
 again going to need some refactoring

@@ -20,18 +20,20 @@ const body = {
   },
 
   processes: {
-    cellDivisionMitosis: () => {
-      // let daughterCells = []
+    cellDivisionMitosis: cell => {
+      let daughterCells = []
 
-      // cell = interphase(cell)
-      // cell = prophase(cell)
-      // cell = metaphase(cell)
-      // cell = anaphase(cell)
-      // daughterCells = telophase(cell)
+      if (cell) {
+        cell = enterInterphase(cell)
+        cell = enterProphase(cell)
+        cell = enterMetaphase(cell)
+        cell = enterAnaphase(cell)
 
-      // return daughterCells
+        daughterCells = enterTelophase(cell)
+      }
 
       return {
+        daughterCells,
         enterAnaphase,
         enterInterphase,
         enterMetaphase,
