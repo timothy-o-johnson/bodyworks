@@ -24,12 +24,12 @@ const body = {
       let daughterCells = []
 
       if (cell) {
-        cell = enterInterphase(cell)
-        cell = enterProphase(cell)
-        cell = enterMetaphase(cell)
-        cell = enterAnaphase(cell)
+        cell = enterInterphase(cell).cellAfterInterphase
+        cell = enterProphase(cell).cellAfterProphase
+        cell = enterMetaphase(cell).cellAfterMetaphase
+        cell = enterAnaphase(cell).cellAfterAnaphase
 
-        daughterCells = enterTelophase(cell)
+        daughterCells = enterTelophase(cell).cells
       }
 
       return {
@@ -276,6 +276,7 @@ const body = {
 
       function enterProphase (cell) {
         let cellAfterProphase = JSON.parse(JSON.stringify(cell))
+
         let chromatin = cell.organelles.chromatin
 
         const cellHasChromatin = chromatin && typeof chromatin === 'string'
@@ -308,7 +309,7 @@ const body = {
 
         cellAfterProphase = addKinetochoresToCentromeres(cellAfterProphase)
 
-        return cellAfterProphase
+        return { cellAfterProphase }
 
         function addKinetochoresToCentromeres (cell) {
           const kinetochoreCount = 2

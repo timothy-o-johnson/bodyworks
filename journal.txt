@@ -1,5 +1,8 @@
-::2022-11-11::
+::2022-11-12::
+pass integrated tests! 
+next time: begin refactoring
 
+::2022-11-11::
 begin working on integratedd test for cellDivisionMitosis()
 
 progress! :)

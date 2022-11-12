@@ -377,7 +377,18 @@ describe('3. Processes', () => {
       expect(processes.cellDivisionMitosis).toBeDefined()
     })
 
-    describe(' ii. enterInterphase()...', () => {
+    describe(' ii. integrated test:', () => {
+      it(`should take in a new cell and return an array of two daughter cells`, () => {
+        const { daughterCells } = cellDivisionMitosis(newCell)
+        const expectedDaughterCells = getDaughterCells()
+
+        console.log({ daughterCells })
+
+        expect(daughterCells).toMatchObject(expectedDaughterCells)
+      })
+    })
+
+    describe('iii. enterInterphase()...', () => {
       it('A. should be defined', () => {
         expect(enterInterphase).toBeDefined()
       })
@@ -412,7 +423,7 @@ describe('3. Processes', () => {
       })
     })
 
-    describe('iii. enterProphase()...', () => {
+    describe(' iv. enterProphase()...', () => {
       it('A. should be defined', () => {
         expect(enterProphase).toBeDefined()
       })
@@ -435,7 +446,7 @@ describe('3. Processes', () => {
             mockCell.organelles.chromatin = JSON.stringify(mockChromosomes)
           }
 
-          const cellAfterProphase = enterProphase(mockCell)
+          const { cellAfterProphase } = enterProphase(mockCell)
 
           expect(cellAfterProphase.organelles.chromosomes.length).toEqual(
             expectedChromosomeCount
@@ -444,7 +455,7 @@ describe('3. Processes', () => {
       })
 
       it('C. should ensure each chromosome is composed of two chromatids connected by a centromere', () => {
-        const cellAfterProphase = enterProphase(cell)
+        const { cellAfterProphase } = enterProphase(cell)
 
         // console.log(JSON.stringify(cellAfterProphase, '', ' '))
 
@@ -475,7 +486,7 @@ describe('3. Processes', () => {
       )
 
       it('E. should break up/dissolve the nuclear membrane and nucleolus', () => {
-        const cellAfterProphase = enterProphase(cell)
+        const { cellAfterProphase } = enterProphase(cell)
         const { nucleolus, nuclearMembrane } = cellAfterProphase.organelles
 
         expect(nucleolus.count).toEqual(0)
@@ -483,7 +494,7 @@ describe('3. Processes', () => {
       })
 
       it('F. should separate centrioles and move them to the opposite poles of the cell where they project microtubules (spindle fibers) called asters', () => {
-        const cellAfterProphase = enterProphase(cell)
+        const { cellAfterProphase } = enterProphase(cell)
         const { centrioles } = cellAfterProphase.organelles
 
         centrioles.forEach(centriole => {
@@ -493,7 +504,7 @@ describe('3. Processes', () => {
       })
 
       it('G. should form kinetochores on the centromeres', () => {
-        const cellAfterProphase = enterProphase(cell)
+        const { cellAfterProphase } = enterProphase(cell)
         const { chromosomes } = cellAfterProphase.organelles
         const kinetochoreCount = 2
 
@@ -505,7 +516,7 @@ describe('3. Processes', () => {
       it.todo('add chromosomes to list of standard cell properties')
     })
 
-    describe(' iv. enterMetaphase()...', () => {
+    describe('  v. enterMetaphase()...', () => {
       cell.organelles.chromosomes = [
         {
           centromeres: {
@@ -592,7 +603,7 @@ describe('3. Processes', () => {
       return
     })
 
-    describe('  v. enterAnaphase()...', () => {
+    describe(' vi. enterAnaphase()...', () => {
       it('A. should be defined', () => {
         expect(enterAnaphase).toBeDefined()
       })
@@ -626,7 +637,7 @@ describe('3. Processes', () => {
       })
     })
 
-    describe(' vi. enterTolophase(),..', () => {
+    describe('vii. enterTolophase(),..', () => {
       it('A. should be defined', () => {
         expect(enterTelophase).toBeDefined()
       })
@@ -639,7 +650,7 @@ describe('3. Processes', () => {
           expect(cells.length).toEqual = 2
 
           // console.log(JSON.stringify(cells));
-          console.log(JSON.stringify(cells, '', ' '))
+          // console.log(JSON.stringify(cells, '', ' '))
 
           // divide the contents from the cell afterAnaphase into the two new cells
           // should split the centrioles and chromosomes from mother cell and bsse the rest of the organelles from a new cell template (since it was essentially not modeled from)
@@ -762,13 +773,6 @@ describe('3. Processes', () => {
       })
     })
 
-    it('integrated test! should take in a new cell and spit out an array of two daughter cells', () => {
-      const daughterCells = cellDivisionMitosis(newCell)
-      const expectedDaughterCells = getDaughterCells()
-
-      expect(daughterCells).toMatchObject(expectedDaughterCells)
-    })
-
     function doChromesHaveMeres (chromosomes) {
       let chromesHaveMeres = false
 
@@ -847,7 +851,7 @@ describe('3. Processes', () => {
 
       const { cellAfterInterphase } = enterInterphase(initialCell)
 
-      const cellAfterProphase = enterProphase(cellAfterInterphase)
+      const { cellAfterProphase } = enterProphase(cellAfterInterphase)
 
       return cellAfterProphase
     }
@@ -1626,6 +1630,8 @@ describe('3. Processes', () => {
           shape: null
         }
       ]
+
+      return daughterCells
     }
   })
 })
