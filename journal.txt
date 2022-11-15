@@ -1,3 +1,8 @@
+::2022-11-15::
+begin refactoring: separate the generalized cell class from the body class
+
+a bit messy now but feeling good about where we are headedc
+
 ::2022-11-12::
 pass integrated tests! 
 next time: begin refactoring
