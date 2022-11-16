@@ -3,7 +3,6 @@ const theCell = require('../../theCell').theCell
 const organelles = theCell.organelles
 const newCell = theCell.createCell(organelles)
 
-
 describe('1. Cells & Tissues (p. 6)', () => {
   describe('a. generalized cell...', () => {
     it('  i. should contain organelles', () => {
@@ -70,7 +69,7 @@ describe('1. Cells & Tissues (p. 6)', () => {
   })
 })
 
-describe('3. processes', () => {
+describe('2. processes', () => {
   const mitosis = theCell.mitosis
 
   it('a. should be defined', () => {
@@ -79,7 +78,7 @@ describe('3. processes', () => {
 
   describe('b. createCell()... (p.6)', () => {
     it(' i. should be defined', () => {
-      expect(mitosis.createCell).toBeDefined()
+      expect(theCell.createCell).toBeDefined()
     })
 
     it(' ii. should contain the following properties: shape, organelles', () => {
@@ -172,23 +171,24 @@ describe('3. processes', () => {
   })
 
   describe('c. mitosis()... (p. 7)', () => {
+    debugger
+
     const cell = JSON.parse(JSON.stringify(newCell))
     const mitosis = theCell.mitosis
 
-    const enterInterphase = mitosis.enterInterphase
-    const enterProphase = mitosis.enterProphase
-    const enterMetaphase = mitosis.enterMetaphase
-    const enterAnaphase = mitosis.enterAnaphase
-    const enterTelophase = mitosis.enterTelophase
-    const cellDivisionMitosis = mitosis.cellDivisionMitosis
+    const enterInterphase = mitosis().enterInterphase
+    const enterProphase = mitosis().enterProphase
+    const enterMetaphase = mitosis().enterMetaphase
+    const enterAnaphase = mitosis().enterAnaphase
+    const enterTelophase = mitosis().enterTelophase
 
     it('i. should be defined', () => {
-      expect(mitosis.mitosis).toBeDefined()
+      expect(theCell.mitosis).toBeDefined()
     })
 
     describe(' ii. integrated test:', () => {
       it(`should take in a new cell and return an array of two daughter cells`, () => {
-        const { daughterCells } = cellDivisionMitosis(newCell)
+        const { daughterCells } = mitosis(newCell)
         const expectedDaughterCells = getDaughterCells()
 
         console.log({ daughterCells })
@@ -452,6 +452,7 @@ describe('3. processes', () => {
       })
 
       describe('B. should pinch the cell off in the center, forming two daughter cells, each identical to the mother cell (assuming no mutations)', () => {
+        debugger
         describe(' i. the cytoplasm and organelles, having duplicated earlier, should segregate into their respective newly forming cells', () => {
           let cell = getCellAfterAnaphase(newCell)
           const { cells, testObj } = enterTelophase(cell)

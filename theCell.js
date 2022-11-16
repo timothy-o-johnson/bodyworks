@@ -393,7 +393,7 @@ const theCell = {
 
       for (var count = 0; count < daughterCellCount; count++) {
         const countIsEven = count % 2 == 0
-        const organelles = body.generalizedCell.organelles
+        const organelles = theCell.organelles
         let newCellChromosomes = countIsEven
           ? leftChromosomes
           : rightChromosomes
@@ -402,7 +402,7 @@ const theCell = {
 
         let testObjCell = countIsEven ? testObj.leftCell : testObj.rightCell
 
-        let newCell = body.processes.createCell(organelles)
+        let newCell = theCell.createCell(organelles)
 
         // const chromosomeCount = countIsEven
         //   ? leftChromosomeCt

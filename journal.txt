@@ -1,3 +1,7 @@
+::2022-11-16::
+continue to refactor. all tests are passing. the Cell code has been separated from theBody and imported. it's a bit cleaner--- i think. haven't had time to really look.  30 min timer is up!
+
+
 ::2022-11-15::
 begin refactoring: separate the generalized cell class from the body class
 
