@@ -1,6 +1,26 @@
+::2022-11-17::
+turns out all tests weren't passing... but they are now.
+there remain a few todo items: 
+1. add proper counts for theCell creation (?)
+2. each chromatid should have the equivolent amount of DNA of a chromosome
+3. add chromosomes to list of standard cell properties
+
+--
+
+1. i think we added this as the process went on. we have numbers for chomatids, chromosomes, centrioles.
+
+2. to be honest we don't understand this sentence. let's see chromatin tightens to become DNA-- right? then the it splits to become chromatids... from what we saw, chromosomes, visually, make an >< and chromatids each half of that X. for example, chromatid one looks like this  > and chromatid two like this <.
+
+3. the jury is still out on this. seems like computer science problem more than comprehension. on the one hand it makes sense to model things exactly as they happen in the cell on the other hand it makes for harder to read code. we think the solution is to split the visuals from the code (front endd/back end). if it doesn't exist don't render it until it does. but we don't feel like doing that so... it's just going to have to wait.
+
+-- in summary
+
+1. is done
+2. we are waiting to hear back from our internet friends
+3. we need to change how we model
+
 ::2022-11-16::
 continue to refactor. all tests are passing. the Cell code has been separated from theBody and imported. it's a bit cleaner--- i think. haven't had time to really look.  30 min timer is up!
-
 
 ::2022-11-15::
 begin refactoring: separate the generalized cell class from the body class
