@@ -1,11 +1,10 @@
-import theCell from './theCell'
+const theCell = require('./theCell').theCell
 
 const body = {
-  generalizedCell: theCell.organelles,
+  generalizedCell: theCell,
 
   processes: {
     cellDivisionMitosis: theCell.mitosis,
-
     createCell: theCell.createCell
   },
 

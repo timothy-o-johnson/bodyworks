@@ -191,8 +191,6 @@ describe('2. processes', () => {
         const { daughterCells } = mitosis(newCell)
         const expectedDaughterCells = getDaughterCells()
 
-        console.log({ daughterCells })
-
         expect(daughterCells).toMatchObject(expectedDaughterCells)
       })
     })
